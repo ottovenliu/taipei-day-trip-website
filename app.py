@@ -1,4 +1,6 @@
 from flask import *
+import mysql.connector
+import requests
 app = Flask(__name__)
 app.config["JSON_AS_ASCII"] = False
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -13,7 +15,46 @@ def index():
 
 @app.route("/attraction/<id>")
 def attraction(id):
-    return render_template("attraction.html")
+    mydb = mysql.connector.Connect(
+        host="localhost",
+        user="my_user",
+        password="123456789",
+        database="my_db"
+    )
+    # 數據庫查詢
+    mycursor = mydb.cursor()
+    sql_page = "SELECT web_id,name,category,description,address,transport,mrt,latitude,longitude,imges FROM taipei_travel WHERE web_id = {id}".format(
+        id=id)
+    mycursor.execute(sql_page)
+    myresult_page = mycursor.fetchall()
+
+    # 數據整理
+    data = []
+    for item in myresult_page:
+        dic = {
+            "id": item[0],
+            "name": item[1],
+            "category": item[2],
+            "description": item[3],
+            "address": item[4],
+            "transport": item[5],
+            "mrt": item[6],
+            "latitude": item[7],
+            "longitude": item[8],
+            "images": item[9]
+        }
+        data.append(dic)
+    # 輸出
+    if len(data) == 0:
+        data = "無檢索資料"
+        abort(400)
+    printout = {
+        "data": data
+    }
+    # TPtravelInfo_json = json.dumps(
+    #     printout, ensure_ascii=False)
+    TPtravelInfo_json = json.dumps(printout)
+    return render_template("attraction.html", content_template=TPtravelInfo_json)
 
 
 @app.route("/booking")
@@ -24,6 +65,79 @@ def booking():
 @app.route("/thankyou")
 def thankyou():
     return render_template("thankyou.html")
+
+
+@app.route("/attractions")
+def attractions():
+    mydb = mysql.connector.Connect(
+        host="localhost",
+        user="my_user",
+        password="123456789",
+        database="my_db"
+    )
+    # 參數整理
+    web_page = request.args.get("page", 0)
+    keywords = request.args.get("keyword", "")
+    keywords.encode('utf-8')
+    page = int(web_page)//12
+    webpage = int(web_page)
+    pagecontent_start = webpage % 12
+    pagecontent_end = 12-pagecontent_start
+
+    if pagecontent_start >= pagecontent_end:
+        region = (webpage-pagecontent_start+1, webpage+pagecontent_end)
+        # print(region)
+    else:
+        region = (webpage-pagecontent_start+1, webpage+pagecontent_end)
+    # 數據庫查詢
+    mycursor = mydb.cursor()
+    sql_page = "SELECT web_id,name,category,description,address,transport,mrt,latitude,longitude,imges FROM taipei_travel WHERE web_id BETWEEN {start} AND {end} AND name LIKE '%{keyword}%'".format(
+        start=region[0], end=region[1], keyword=keywords)
+    mycursor.execute(sql_page)
+    myresult_page = mycursor.fetchall()
+
+    # 數據整理
+    data = []
+    for item in myresult_page:
+        dic = {
+            "id": item[0],
+            "name": item[1],
+            "category": item[2],
+            "description": item[3],
+            "address": item[4],
+            "transport": item[5],
+            "mrt": item[6],
+            "latitude": item[7],
+            "longitude": item[8],
+            "images": item[9]
+        }
+        data.append(dic)
+    # 輸出
+    if len(data) == 0:
+        data = "無檢索資料"
+    printout = {
+        "nextPage": page+1,
+        "data": data
+
+    }
+
+    return jsonify(printout)
+
+
+@app.errorhandler(500)
+def err_handler(e):
+    return jsonify({
+        "error": "true",
+        "message": "伺服器錯誤"
+    })
+
+
+@app.errorhandler(400)
+def err_handler(e):
+    return jsonify({
+        "error": "true",
+        "message": "景點編號有誤"
+    })
 
 
 app.run(port=3000)
