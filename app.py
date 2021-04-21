@@ -29,6 +29,8 @@ def attraction(id):
     myresult_page = mycursor.fetchall()
     # error stear
     # 數據整理
+    if myresult_page == []:
+        abort(400)
     dic = {
         "id": myresult_page[0][0],
         "name": myresult_page[0][1],
@@ -43,8 +45,6 @@ def attraction(id):
     }
 
     # 輸出
-    if dic["id"] == False:
-        abort(400)
     printout = {
         "data": dic
     }
