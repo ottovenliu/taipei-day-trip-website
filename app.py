@@ -29,8 +29,6 @@ def attraction(id):
     myresult_page = mycursor.fetchall()
     # error stear
     # 數據整理
-    print(myresult_page)
-    print(type(myresult_page))
     dic = {
         "id": myresult_page[0][0],
         "name": myresult_page[0][1],
@@ -83,49 +81,104 @@ def attractions():
     web_page = request.args.get("page", 0)
     keywords = request.args.get("keyword", "")
     keywords.encode('utf-8')
-    page = int(web_page)//12
     webpage = int(web_page)
-    pagecontent_start = webpage % 12
-    pagecontent_end = 12-pagecontent_start
+    pagecontent_start = webpage*12+1
+    pagecontent_end = pagecontent_start+11
+    region = (pagecontent_start, pagecontent_end)
 
-    if pagecontent_start >= pagecontent_end:
-        region = (webpage-pagecontent_start+1, webpage+pagecontent_end)
-        # print(region)
-    else:
-        region = (webpage-pagecontent_start+1, webpage+pagecontent_end)
     # 數據庫查詢
     mycursor = mydb.cursor()
-    sql_page = "SELECT web_id,name,category,description,address,transport,mrt,latitude,longitude,imges FROM taipei_travel WHERE web_id BETWEEN {start} AND {end} AND name LIKE '%{keyword}%'".format(
-        start=region[0], end=region[1], keyword=keywords)
-    mycursor.execute(sql_page)
-    myresult_page = mycursor.fetchall()
-
+    if keywords != "":
+        sql_keyword = "SELECT web_id,name,category,description,address,transport,mrt,latitude,longitude,imges FROM taipei_travel WHERE name LIKE '%{keyword}%'".format(
+            keyword=keywords)
+        mycursor.execute(sql_keyword)
+        myresult = mycursor.fetchall()
+    else:
+        sql_page = "SELECT web_id,name,category,description,address,transport,mrt,latitude,longitude,imges FROM taipei_travel WHERE web_id BETWEEN {start} AND {end} AND name LIKE '%{keyword}%'".format(
+            start=region[0], end=region[1], keyword=keywords)
+        mycursor.execute(sql_page)
+        myresult = mycursor.fetchall()
     # 數據整理
+    bigdata = []
     data = []
-    for item in myresult_page:
-        dic = {
-            "id": item[0],
-            "name": item[1],
-            "category": item[2],
-            "description": item[3],
-            "address": item[4],
-            "transport": item[5],
-            "mrt": item[6],
-            "latitude": item[7],
-            "longitude": item[8],
-            "images": item[9]
-        }
-        data.append(dic)
-    # 輸出
-    if len(data) == 0:
+    dataspace = []
+    if len(myresult) <= 0:
         data = "無檢索資料"
-    printout = {
-        "nextPage": page+1,
-        "data": data
+        i = None
+        data_dic = {
+            "nextPage": i,
+            "data": data
+        }
+        print(len(myresult)+1)
 
-    }
+    else:
+        if keywords != "":
+            if len(myresult) < 12:
+                page_split = 1
+            elif len(myresult) % 12 == 0:
+                page_split = len(myresult)//12+1
+            else:
+                page_split = len(myresult)//12
+            for i in range(0, page_split):
+                for item in myresult:
+                    dic = {
+                        "id": item[0],
+                        "name": item[1],
+                        "category": item[2],
+                        "description": item[3],
+                        "address": item[4],
+                        "transport": item[5],
+                        "mrt": item[6],
+                        "latitude": item[7],
+                        "longitude": item[8],
+                        "images": item[9]
+                    }
+                    data.append(dic)
+                dataspace.append([i, data])
+            if dataspace[0][0] == 0:
+                dataspace[0][0] = None
+            data_dic = {
+                "nextPage": dataspace[0][0],
+                "data": dataspace[0][1]
+            }
+            bigdata.append(data_dic)
+        else:
+            nextwebPage = webpage+1
+            if len(myresult) < 12:
+                nextwebPage = None
+            for item in myresult:
+                dic = {
+                    "id": item[0],
+                    "name": item[1],
+                    "category": item[2],
+                    "description": item[3],
+                    "address": item[4],
+                    "transport": item[5],
+                    "mrt": item[6],
+                    "latitude": item[7],
+                    "longitude": item[8],
+                    "images": item[9]
+                }
+                data.append(dic)
+            dataspace.append([nextwebPage, data])
+            data_dic = {
+                "nextPage": dataspace[0][0],
+                "data": dataspace[0][1]
+            }
+            bigdata.append(data_dic)
 
-    return jsonify(printout)
+        # if
+        #     print("123")
+
+        # if keywords == "":
+        #     i = webpage
+        # elif i-1 == len(myresult)//12:
+        #     i = None
+        # data_dic = {
+        #     "nextPage": i,
+        #     "data": data
+        # }
+    return jsonify(bigdata[0])
 
 
 @app.errorhandler(500)
