@@ -2,7 +2,7 @@
 import mysql.connector
 import json
 file = open(
-    'data/taipei-attractions.json', "r", encoding="utf-8")
+    'taipei-attractions.json', "r", encoding="utf-8")
 rawdata_json = json.load(file)
 
 
