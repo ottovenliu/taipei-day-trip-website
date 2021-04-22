@@ -17,7 +17,7 @@ def attraction(id):
     mydb = mysql.connector.Connect(
         host="localhost",
         user="my_user",
-        password="123456789",
+        password="nhAG*nn8Yu7V",
         database="my_db"
     )
     # 數據庫查詢
@@ -73,7 +73,7 @@ def attractions():
     mydb = mysql.connector.Connect(
         host="localhost",
         user="my_user",
-        password="123456789",
+        password="nhAG*nn8Yu7V",
         database="my_db"
     )
     # 參數整理
