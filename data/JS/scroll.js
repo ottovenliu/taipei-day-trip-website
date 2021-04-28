@@ -63,10 +63,6 @@ window.addEventListener('scroll', () => {
             var scrollNextpage = items[items.length - 1]
             var lessShow = (items.length - 1);
         };
-
-        // var contextArea = JSON.parse(Req.responseText);
-
-        // console.log("更新後的下一頁" + contextArea["nextPage"])
         function addImg() {
             var parent = document.getElementById('contentArea');
             console.log(parent)
