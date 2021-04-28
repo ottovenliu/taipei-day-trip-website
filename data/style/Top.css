@@ -6,6 +6,9 @@
     justify-content: center;
     flex-direction: column;
     border:2px double black;
+    position: fixed;
+    top: 0px;
+    left: 0px;
 }
 .headerIndexbox{
     width: 1200px;

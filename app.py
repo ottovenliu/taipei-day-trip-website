@@ -1,6 +1,8 @@
 from flask import *
 import mysql.connector
-app = Flask(__name__)
+app = Flask(__name__,
+            static_url_path="/",
+            static_folder="data")
 app.config["JSON_AS_ASCII"] = False
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 
@@ -17,7 +19,7 @@ def attraction(id):
     mydb = mysql.connector.Connect(
         host="localhost",
         user="my_user",
-        password="nhAG*nn8Yu7V",
+        password="123456789",
         database="my_db"
     )
     # 數據庫查詢
@@ -73,7 +75,7 @@ def attractions():
     mydb = mysql.connector.Connect(
         host="localhost",
         user="my_user",
-        password="nhAG*nn8Yu7V",
+        password="123456789",
         database="my_db"
     )
     # 參數整理
@@ -143,6 +145,11 @@ def attractions():
     return jsonify(data_printout[0])
 
 
+@app.route("/test")
+def test():
+    return render_template("test.html")
+
+
 @app.errorhandler(500)
 def err_handler(e):
     return jsonify({
@@ -159,4 +166,5 @@ def err_handler(e):
     })
 
 
-app.run(host="0.0.0.0", port=3000)
+# app.run(host="0.0.0.0", port=3000, debug=True)
+app.run(port=3000, debug=True)

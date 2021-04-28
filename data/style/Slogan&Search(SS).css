@@ -4,6 +4,8 @@
     height: 320px;
     background: linear-gradient(135deg, #AADDEE 0%, #66AABB 100%);
     border:2px double red;
+    top: 40px;
+    margin: 0px;
 }
 .sloganAndsearch>.box{
     position: absolute;
