@@ -22,7 +22,6 @@ req.onload = function rawData() {
 };
 req.send(null);
 var contextArea = JSON.parse(req.responseText);
-console.log(contextArea)
 var items = [];
 for (i = 0; i < contextArea["data"].length; i++) {
     var item = [];
@@ -43,7 +42,6 @@ for (i = 0; i < contextArea["data"].length; i++) {
 items.push(contextArea["nextPage"]);
 var lessShow = (items.length - 1);
 var endtimes = 0;
-// console.log(keywords_template)
 var firstpage = function addImg() {
     var parent = document.getElementById('contentArea');
     for (var i = 0; i < lessShow; i++) {
@@ -147,13 +145,11 @@ window.addEventListener('scroll', () => {
                 item.push(contextArea["data"][i]["transport"]);
                 items.push(item);
             };
-            console.log(items)
             items.push(contextArea["nextPage"]);
             var lessShow = (items.length - 1);
         };
         function addImg() {
             var parent = document.getElementById('contentArea');
-            console.log(parent)
             var scrollNowpage = endtimes * 12
             for (var i = 0; i < lessShow; i++) {
                 var newDiv = document.createElement('div');
