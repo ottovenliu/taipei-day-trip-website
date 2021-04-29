@@ -166,5 +166,4 @@ def err_handler(e):
     })
 
 
-# app.run(host="0.0.0.0", port=3000, debug=True) /本地
-app.run(port=3000, debug=True)
+app.run(host="0.0.0.0", port=3000, debug=True)
