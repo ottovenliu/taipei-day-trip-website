@@ -18,7 +18,6 @@ var SKword = "/attractions?keyword=" + searchKWord
 var req = new XMLHttpRequest();
 req.open("get", SKword, false)
 req.onload = function rawData() {
-    // alert("已成功聯繫伺服器");
 };
 req.send(null);
 var contextArea = JSON.parse(req.responseText);
