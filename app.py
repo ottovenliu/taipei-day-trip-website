@@ -134,7 +134,7 @@ def attractions():
         nextwebpage = Nowpage+1
         if len(data_box) == 1 or Nowpage == len(data_box)-1:
             nextwebpage = None
-        print(len(data_box))
+        print("多少筆資料", len(data_box))
         data_dic = {
             "nextPage": nextwebpage,
             "data": dataspace[0][1]
@@ -166,5 +166,5 @@ def err_handler(e):
     })
 
 
-# app.run(host="0.0.0.0", port=3000, debug=True)
+# app.run(host="0.0.0.0", port=3000, debug=True) /本地
 app.run(port=3000, debug=True)
