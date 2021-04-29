@@ -1,0 +1,32 @@
+/* include:title signin sginup */
+.titleAndindex{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: fixed;
+    z-index: 99999999999999;
+    top: 0px;
+    left: 0px;
+    background-color: white;
+}
+.headerIndexbox{
+    width: 1200px;
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+    font-size: 30px;
+    color: #489;
+}
+.headerIndexbox>.box{
+    width: 175px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: row;
+    font-size: 16px;
+    color: #666;
+}
