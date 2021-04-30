@@ -87,16 +87,22 @@ var firstpage = function addImg() {
         textBox.style.fontSize = "16px";
         textBox.style.textAlign = "left";
         textBox.style.fontWeight = "bold";
+        textBox.style.paddingLeft = "5px"
+        textBox.style.paddingRight = "5px"
         infoBox.style.width = "100%";
         infoBox.style.height = "10%";
         infoBox.style.display = "flex";
         infoBox.style.flexDirection = "row";
+        infoBox.style.paddingLeft = "5px";
+        infoBox.style.paddingRight = "5px";
         infoBox_L.style.width = "50%";
         infoBox_L.style.fontSize = "16px";
         infoBox_L.style.textAlign = "left";
         infoBox_R.style.width = "50%";
         infoBox_R.style.fontSize = "16px";
-        infoBox_R.style.textAlign = "right";
+        infoBox_R.style.textAlign = "center";
+        textBox.setAttribute("class", "textBox")
+        infoBox.setAttribute("class", "infoBox")
         imgBox.setAttribute("id", `imgBox_${i}`)
         textBox.appendChild(A_name);
         infoBox_L.appendChild(A_MRT);
@@ -194,16 +200,22 @@ window.addEventListener('scroll', () => {
                 textBox.style.fontSize = "16px";
                 textBox.style.textAlign = "left";
                 textBox.style.fontWeight = "bold";
+                textBox.style.paddingLeft = "5px"
+                textBox.style.paddingRight = "5px"
                 infoBox.style.width = "100%";
                 infoBox.style.height = "10%";
                 infoBox.style.display = "flex";
                 infoBox.style.flexDirection = "row";
+                infoBox.style.paddingLeft = "5px"
+                infoBox.style.paddingLeft = "5px"
                 infoBox_L.style.width = "50%";
                 infoBox_L.style.fontSize = "16px";
                 infoBox_L.style.textAlign = "left";
                 infoBox_R.style.width = "50%";
                 infoBox_R.style.fontSize = "16px";
-                infoBox_R.style.textAlign = "right";
+                infoBox_R.style.textAlign = "center";
+                textBox.setAttribute("class", "textBox")
+                infoBox.setAttribute("class", "infoBox")
                 imgBox.setAttribute("id", `imgBox_${scrollNowpage + i}`)
                 textBox.appendChild(A_name);
                 infoBox_L.appendChild(A_MRT);
