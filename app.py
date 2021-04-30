@@ -22,6 +22,7 @@ def attraction(id):
         password="nhAG*nn8Yu7V",
         database="my_db"
     )
+    # nhAG*nn8Yu7V
     # 數據庫查詢
     mycursor = mydb.cursor()
     sql_page = "SELECT web_id,name,category,description,address,transport,mrt,latitude,longitude,imges FROM taipei_travel WHERE web_id = {id}".format(
@@ -166,4 +167,5 @@ def err_handler(e):
     })
 
 
+# app.run(port=3000, debug=True)
 app.run(host="0.0.0.0", port=3000, debug=True)

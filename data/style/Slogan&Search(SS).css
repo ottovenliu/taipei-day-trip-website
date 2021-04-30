@@ -11,18 +11,22 @@ body{
     background: linear-gradient(135deg, #AADDEE 0%, #66AABB 100%);
     padding: 0px;
     margin: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .sloganAndsearch>.box{
     position: absolute;
     width: 1200px;
-    max-width: 80%;
+    max-width: 100%;
     height: 149px;
-    top: 25%;
-    left: 20%;
+    /* top: 25%; */
+    /* left: 20%; */
     display: flex;
     justify-content: space-around;
     flex-direction: column;
     overflow: hidden;
+    
 }
 .sloganAndsearch>.box>.sloganbox{
     width: 1180px;
@@ -31,6 +35,7 @@ body{
     display: flex;
     justify-content: space-around;
     flex-direction: column;
+    margin: 5px;
 }
 .sloganAndsearch>.box>.sloganbox>.title{
     margin: 0px;
@@ -48,6 +53,7 @@ body{
     height: 46px;
     display: flex;
     justify-content: flex-start;
+    margin: 5px;
 }
 .sloganAndsearch>.box>form>.searchbox>.input{
     width: 370px;
@@ -87,7 +93,6 @@ body{
 
 @media (max-width:600px) {
     .sloganAndsearch>.box{
-        left: 3%;
         max-width:100%;
     }
     .sloganAndsearch>.img>.sloganimg{        
