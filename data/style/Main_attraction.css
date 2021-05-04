@@ -104,10 +104,20 @@ body>.contentSpace{
     width: 50%;
     margin: 5px;
 }
+#bookingForm>.paybox{
+    width: 100%;
+    margin: 5px;
+    display: flex;
+    flex-flow: row nowrap;
+}
 #bookingForm>.paybox>.title{
     margin: 5px;
     font-size: 16px;
     font-weight: bold;
+}
+#bookingForm>.paybox>.pay{
+    margin: 5px;
+    font-size: 16px;
 }
 #bookingForm>button{
     width: 160px;
@@ -115,11 +125,12 @@ body>.contentSpace{
     margin: 5px;
     color: white;
     background-color:#448899;
-    border: 20px;
+    border: none;
+    border-radius: 10px;
 }
 #attractionInfoBox>.abstract{
     font-size: 16px;
-    line-height:115%;
+    line-height:150%;
 }
 #attractionInfoBox>.address>.title{
     font-size: 16px;

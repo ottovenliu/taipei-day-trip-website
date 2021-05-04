@@ -30,12 +30,12 @@
             </div>
             <div id="Binfobox">
                 <div class="titlebox">
-                    <div class="title">我家</div>
-                    <div class="MRTinfo">home at 政大</div>
+                    <div id="attractionName" class="title"></div>
+                    <div id="attractionMRT" class="MRTinfo"></div>
                 </div>
                 <div class="bookingbox">
-                    <div class="title">訂購導覽行程 16px bold</div>
-                    <div class="content">以此景點為中心的一日行程，帶您探索城市角落故事 16px</div>
+                    <div class="title">訂購導覽行程</div>
+                    <div class="content">以此景點為中心的一日行程，帶您探索城市角落故事</div>
                     <form action="" id="bookingForm">
                         <div class="datebox">
                             <div class="title">選擇日期：</div>
@@ -45,16 +45,16 @@
                             <div class="title">選擇時間：</div>
                             <div class="noonbox">
                                 <div class="noon">
-                                    <input type="radio" name="time" value="noon"> 上半天
+                                    <input type="radio" name="time" value="noon" onclick="noonselect()"> 上半天
                                 </div>
                                 <div class="afternoon">
-                                    <input type="radio" name="time" value="afternoon"> 下半天
+                                    <input type="radio" name="time" value="afternoon" onclick="afternoonselect()"> 下半天
                                 </div>
                             </div>
                         </div>
                         <div class="paybox">
                             <div class="title">導覽費用：</div>
-                            <div id="pay"></div>
+                            <div id="pay" class="pay"></div>
                         </div>
                         <button>開始預訂行程</button>
                     </form>
@@ -62,18 +62,16 @@
             </div>
         </div>
         <div id="attractionInfoBox">
-            描述,景點地址,交通方式
-            <div class="abstract">
-                業媽能合成看習陸布新童了多，學應無學的……非去自一來持使究半設文有直遊然總得重有大人到中臺市備不工別？史實是甚？接讀在年在我，克存當沒雨無上飯有只爾天是分人漸機我少晚然腳認、得一聲實……發界何人地美友前才治坐定動沒照率醫發面只向空務為人的表的事利家汽是非動的十去世外意世是傳育力往參就不華父在境不過能中太一日般色議好我，道唱有教，十驚在的為選子是看然我面軍開辦動洋知強變！綠財立正法氣人。縣傳之明球信歡才初多出試年可濟：的女只舉手我及，男到雖一我大雖們府，產市來問食成提，是能是國的！法員型施，者唱我好非大、化他速高讀會，由電各直大極送兒口會？成從收是為專管……和供國者日金自記時個會？不失無傳證；世而不意下深加兩會大往都，須濟而得結她那可老後接也……走漸投外風引平，心開進找十環交自沒質意銷來面中臺情
+            <div id="abstract" class="abstract">
             </div>
-            <div class="address">
+            <div id="address" class="address">
                 <div class="title">景點地址</div>
-                <div class="content"></div>
+                <div id="addresscontent" class="content"></div>
 
             </div>
             <div class="Transportation">
                 <div class="title">交通方式</div>
-                <div class="content"></div>
+                <div id="Transcontent" class="content"></div>
 
             </div>
         </div>
@@ -83,5 +81,7 @@
 <footer>
     <p>COPYRIGHT © 2021 台北一日遊</p>
 </footer>
+<script type="text/javascript" src="/JS/click.js"></script>
+<script type="text/javascript" src="/JS/attraction.js"></script>
 
 </html>
