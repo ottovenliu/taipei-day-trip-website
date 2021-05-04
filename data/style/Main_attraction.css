@@ -1,0 +1,148 @@
+body{
+    position: relative;
+    top: 40px;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: column nowrap;
+}
+body>.contentSpace{
+    position: relative;
+    padding: 5px;
+    margin: 5px;
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+#bookingInfoBox{
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+}
+#Bimgbox{
+    width: 50%;
+}
+#Binfobox{
+ width: 50%;
+ margin: 5px;
+}
+#Binfobox>.titlebox{
+    width: 100%;
+    margin: 5px;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+#Binfobox>.titlebox>.title{
+    margin: 5px;
+    font-size: 24px;
+    font-weight: bold;
+}  
+#Binfobox>.titlebox>.MRTinfo{
+    margin: 5px;
+    font-size: 16px;
+}  
+#Binfobox>.bookingbox{
+    width: 100%;
+    margin: 5px;
+    background-color:#E8E8E8;
+    border-radius: 10px;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: flex-start;
+    justify-items: flex-start;
+}  
+#Binfobox>.bookingbox>.title{
+    margin: 5px;
+    font-size: 16px;
+    font-weight: bold;
+} 
+#Binfobox>.bookingbox>.content{
+    margin: 5px;
+    font-size: 16px;
+} 
+#bookingForm>.datebox{
+    width: auto;
+    max-width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: flex-start;
+    justify-items: flex-start;
+} 
+#bookingForm>.datebox>.title{
+    margin: 5px;
+    font-size: 16px;
+    font-weight: bold;
+}
+#bookingForm>.datebox>input{
+    margin: 5px;
+    border: 0px;
+}
+#bookingForm>.timebox>.title{
+    margin: 5px;
+    font-size: 16px;
+    font-weight: bold;
+}
+#bookingForm>.timebox>.noonbox{
+    width: 100%;
+    margin: 5px;
+    display: flex;
+    flex-flow: row nowrap;
+}
+#bookingForm>.timebox>.noonbox>.noon{
+    width: 50%;
+    margin: 5px;
+}
+#bookingForm>.timebox>.noonbox>.afternoon{
+    width: 50%;
+    margin: 5px;
+}
+#bookingForm>.paybox>.title{
+    margin: 5px;
+    font-size: 16px;
+    font-weight: bold;
+}
+#bookingForm>button{
+    width: 160px;
+    height: 35px;
+    margin: 5px;
+    color: white;
+    background-color:#448899;
+    border: 20px;
+}
+#attractionInfoBox>.abstract{
+    font-size: 16px;
+    line-height:115%;
+}
+#attractionInfoBox>.address>.title{
+    font-size: 16px;
+    font-weight: bold;
+}
+#attractionInfoBox>.address>.content{
+    font-size: 16px;
+}
+#attractionInfoBox>.Transportation>.title{
+    font-size: 16px;
+    font-weight: bold;
+}
+ #attractionInfoBox>.Transportation>.content{
+    font-size: 16px;
+}
+
+
+
+
+
+
+
+
+
+
+/*  */

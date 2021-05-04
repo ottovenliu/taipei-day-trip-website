@@ -14,7 +14,7 @@ var searchKWord = searchKeyword[1];
 if (searchKeyword[1] == undefined) {
     searchKWord = "";
 };
-var SKword = "/attractions?keyword=" + searchKWord
+var SKword = "/api/attractions?keyword=" + searchKWord
 var req = new XMLHttpRequest();
 req.open("get", SKword, false)
 req.onload = function rawData() {
@@ -122,12 +122,14 @@ window.addEventListener('scroll', () => {
     let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
     let clientHeight = document.documentElement.clientHeight || document.body.clientHeight;
     let scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
+    console.log(contextArea)
+    if (contextArea["nextPage"] == "null") {
+        alert("到底了")
+    };
     if (scrollTop + clientHeight > scrollHeight - 1) {
         endtimes++;
         var Req = new XMLHttpRequest();
         Req.open("get", SKword + "&page=" + endtimes, false)
-        // Req.onload = function () {
-        // };
         Req.send(null);
         var contextArea = JSON.parse(Req.responseText);
         if (contextArea["data"] == "超出檢索範圍") {

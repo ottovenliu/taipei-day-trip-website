@@ -14,12 +14,12 @@ def index():
     return render_template("index.html")
 
 
-@app.route("/attraction/<id>")
-def attraction(id):
+@app.route("/api/attraction/<id>")
+def APIattraction(id):
     mydb = mysql.connector.Connect(
         host="localhost",
         user="my_user",
-        password="nhAG*nn8Yu7V",
+        password="123456789",
         database="my_db"
     )
     # nhAG*nn8Yu7V
@@ -29,8 +29,7 @@ def attraction(id):
         id=id)
     mycursor.execute(sql_page)
     myresult_page = mycursor.fetchall()
-    # error stear
-    # 數據整理
+
     if myresult_page == []:
         abort(400)
     dic = {
@@ -46,19 +45,17 @@ def attraction(id):
         "images": myresult_page[0][9]
     }
 
-    # 輸出
     printout = {
         "data": dic
     }
-    # TPtravelInfo_json = json.dumps(
-    #     printout, ensure_ascii=False)
 
-    # TPtravelInfo_json = jsonify(printout)
-    # TPtravelInfo_json = json.dumps(printout)
-    # return render_template("attraction.html", content_template=TPtravelInfo_json)
     return jsonify(printout)
-    # 跟json風磚的時候不太相關 重新試試看資料整理的方法有關 formater
-    # error end
+
+
+@app.route("/attraction/<id>")
+def attraction(id):
+    print(id)
+    return render_template("attraction.html")
 
 
 @app.route("/booking")
@@ -71,12 +68,12 @@ def thankyou():
     return render_template("thankyou.html")
 
 
-@app.route("/attractions")
-def attractions():
+@app.route("/api/attractions")
+def APIattractions():
     mydb = mysql.connector.Connect(
         host="localhost",
         user="my_user",
-        password="nhAG*nn8Yu7V",
+        password="123456789",
         database="my_db"
     )
     # 參數整理
@@ -167,5 +164,5 @@ def err_handler(e):
     })
 
 
-# app.run(port=3000, debug=True)
-app.run(host="0.0.0.0", port=3000, debug=True)
+app.run(port=3000, debug=True)
+# app.run(host="0.0.0.0", port=3000, debug=True)
