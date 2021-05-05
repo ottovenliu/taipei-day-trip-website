@@ -41,10 +41,15 @@ for (i = 0; i < contextArea["data"].length; i++) {
 items.push(contextArea["nextPage"]);
 var lessShow = (items.length - 1);
 var endtimes = 0;
+var nextPage = contextArea["nextPage"]
 var firstpage = function addImg() {
     var parent = document.getElementById('contentArea');
     for (var i = 0; i < lessShow; i++) {
-        var newDiv = document.createElement('div');
+        var newDiv = document.createElement('a');
+        var ID_URL = "/attraction/" + items[i][3]
+        newDiv.href = ID_URL
+        newDiv.style.color = "black"
+        newDiv.style.textDecoration = "none"
         newDiv.setAttribute("class", "item")
         newDiv.setAttribute("id", `item_${i}`)
         parent.appendChild(newDiv);
@@ -85,6 +90,7 @@ var firstpage = function addImg() {
         textBox.style.height = "20px";
         textBox.style.width = "100%";
         textBox.style.fontSize = "16px";
+        textBox.style.color = "black";
         textBox.style.textAlign = "left";
         textBox.style.fontWeight = "bold";
         textBox.style.paddingLeft = "5px"
@@ -122,11 +128,9 @@ window.addEventListener('scroll', () => {
     let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
     let clientHeight = document.documentElement.clientHeight || document.body.clientHeight;
     let scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
-    console.log(contextArea)
-    if (contextArea["nextPage"] == "null") {
-        alert("到底了")
-    };
-    if (scrollTop + clientHeight > scrollHeight - 1) {
+    if (nextPage == "null") {
+
+    } else if (scrollTop + clientHeight > scrollHeight - 1) {
         endtimes++;
         var Req = new XMLHttpRequest();
         Req.open("get", SKword + "&page=" + endtimes, false)
@@ -139,17 +143,17 @@ window.addEventListener('scroll', () => {
             for (i = 0; i < contextArea["data"].length; i++) {
                 var item = [];
                 var file = contextArea["data"][i]["images"].split("http://");
-                item.push(contextArea["data"][i]["address"]);
-                item.push(contextArea["data"][i]["category"]);
-                item.push(contextArea["data"][i]["description"]);
-                item.push(contextArea["data"][i]["id"]);
+                item.push(contextArea["data"][i]["address"]);//0
+                item.push(contextArea["data"][i]["category"]);//1
+                item.push(contextArea["data"][i]["description"]);//2
+                item.push(contextArea["data"][i]["id"]);//3
                 var img = "http://" + file[1];
-                item.push(img);
-                item.push(contextArea["data"][i]["latitude"]);
-                item.push(contextArea["data"][i]["longitude"]);
-                item.push(contextArea["data"][i]["mrt"]);
-                item.push(contextArea["data"][i]["name"]);
-                item.push(contextArea["data"][i]["transport"]);
+                item.push(img);//4
+                item.push(contextArea["data"][i]["latitude"]);//5
+                item.push(contextArea["data"][i]["longitude"]);//6
+                item.push(contextArea["data"][i]["mrt"]);//7
+                item.push(contextArea["data"][i]["name"]);//8
+                item.push(contextArea["data"][i]["transport"]);//9
                 items.push(item);
             };
             items.push(contextArea["nextPage"]);
@@ -175,6 +179,7 @@ window.addEventListener('scroll', () => {
                 var A_name = document.createTextNode(items[i][8]);
                 var A_MRT = document.createTextNode(items[i][7]);//--------------------------
                 var A_catagory = document.createTextNode(items[i][1]);//-------------------------
+                // var A_ID = document.createTextNode(items[i][3]);//-------------------------0506
                 var imageSources = items[i][4];
                 boxConten.style.display = "flex";
                 boxConten.style.justifyContent = "flex-start";

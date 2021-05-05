@@ -19,7 +19,7 @@ def APIattraction(id):
     mydb = mysql.connector.Connect(
         host="localhost",
         user="my_user",
-        password="123456789",
+        password="nhAG*nn8Yu7V",
         database="my_db"
     )
     # nhAG*nn8Yu7V
@@ -73,7 +73,7 @@ def APIattractions():
     mydb = mysql.connector.Connect(
         host="localhost",
         user="my_user",
-        password="123456789",
+        password="nhAG*nn8Yu7V",
         database="my_db"
     )
     # 參數整理
@@ -164,5 +164,5 @@ def err_handler(e):
     })
 
 
-app.run(port=3000, debug=True)
-# app.run(host="0.0.0.0", port=3000, debug=True)
+# app.run(port=3000, debug=True)
+app.run(host="0.0.0.0", port=3000, debug=True)
