@@ -163,9 +163,13 @@ window.addEventListener('scroll', () => {
             var parent = document.getElementById('contentArea');
             var scrollNowpage = endtimes * 12
             for (var i = 0; i < lessShow; i++) {
-                var newDiv = document.createElement('div');
+                var newDiv = document.createElement('a');
+                var ID_URL = "/attraction/" + items[i][3]
+                newDiv.href = ID_URL
+                newDiv.style.color = "black"
+                newDiv.style.textDecoration = "none"
                 newDiv.setAttribute("class", "item")
-                newDiv.setAttribute("id", `item_${scrollNowpage + i}`)
+                newDiv.setAttribute("id", `item_${i}`)
                 parent.appendChild(newDiv);
             }
             for (i = 0; i < lessShow; i++) {
