@@ -169,7 +169,7 @@ window.addEventListener('scroll', () => {
                 newDiv.style.color = "black"
                 newDiv.style.textDecoration = "none"
                 newDiv.setAttribute("class", "item")
-                newDiv.setAttribute("id", `item_${i}`)
+                newDiv.setAttribute("id", `item_${scrollNowpage + i}`)
                 parent.appendChild(newDiv);
             }
             for (i = 0; i < lessShow; i++) {
@@ -183,7 +183,6 @@ window.addEventListener('scroll', () => {
                 var A_name = document.createTextNode(items[i][8]);
                 var A_MRT = document.createTextNode(items[i][7]);//--------------------------
                 var A_catagory = document.createTextNode(items[i][1]);//-------------------------
-                // var A_ID = document.createTextNode(items[i][3]);//-------------------------0506
                 var imageSources = items[i][4];
                 boxConten.style.display = "flex";
                 boxConten.style.justifyContent = "flex-start";
@@ -209,6 +208,7 @@ window.addEventListener('scroll', () => {
                 textBox.style.height = "20px";
                 textBox.style.width = "100%";
                 textBox.style.fontSize = "16px";
+                textBox.style.color = "black";
                 textBox.style.textAlign = "left";
                 textBox.style.fontWeight = "bold";
                 textBox.style.paddingLeft = "5px"
@@ -217,8 +217,8 @@ window.addEventListener('scroll', () => {
                 infoBox.style.height = "10%";
                 infoBox.style.display = "flex";
                 infoBox.style.flexDirection = "row";
-                infoBox.style.paddingLeft = "5px"
-                infoBox.style.paddingLeft = "5px"
+                infoBox.style.paddingLeft = "5px";
+                infoBox.style.paddingRight = "5px";
                 infoBox_L.style.width = "50%";
                 infoBox_L.style.fontSize = "16px";
                 infoBox_L.style.textAlign = "left";
@@ -237,6 +237,8 @@ window.addEventListener('scroll', () => {
                 boxConten.appendChild(imgBox);
                 boxConten.appendChild(textBox);
                 boxConten.appendChild(infoBox);
+                ////////////////////////////////
+
             };
         }
         addImg();
