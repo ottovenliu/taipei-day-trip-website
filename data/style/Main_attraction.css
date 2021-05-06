@@ -1,0 +1,273 @@
+.titleAndindex{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: fixed;
+    z-index: 99999999999999;
+    top: 0px;
+    left: 0px;
+    background-color: white;
+    padding: 5px;
+    border-bottom: 1px lightgray solid;
+}
+.headerIndexbox{
+    width: 1200px;
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+    font-size: 30px;
+    color: #489;
+}
+.headerIndexbox>.box{
+    width: 175px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: row;
+    font-size: 16px;
+    color: #666;
+}
+.splitline{
+    width: 100%;
+    height: 1px;
+    background-color: lightgray;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+body{
+    position: relative;
+    top: 90px;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: column nowrap;
+}
+body>.contentSpace{
+    position: relative;
+    padding: 5px;
+    margin: 5px;
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+#bookingInfoBox{
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+}
+#Bimgbox{
+    width: 50%;
+}
+#Binfobox{
+    width: 50%;
+    margin: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-bottom: 0px;
+}
+#Binfobox>.titlebox{
+    width: 100%;
+    margin: 5px;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+#Binfobox>.titlebox>.title{
+    margin: 5px;
+    font-size: 24px;
+    font-weight: bold;
+}  
+#Binfobox>.titlebox>.MRTinfo{
+    margin: 5px;
+    font-size: 16px;
+}  
+#Binfobox>.bookingbox{
+    width: 100%;
+    /* margin: 5px; */
+    background-color:#E8E8E8;
+    border-radius: 10px;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: flex-start;
+    justify-items: flex-start;
+}  
+#Binfobox>.bookingbox>.title{
+    margin: 5px;
+    font-size: 16px;
+    font-weight: bold;
+} 
+#Binfobox>.bookingbox>.content{
+    margin: 5px;
+    font-size: 16px;
+} 
+#bookingForm{
+    width: 100%;
+}
+#bookingForm>.datebox{
+    width: auto;
+    max-width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: flex-start;
+    justify-items: flex-start;
+} 
+#bookingForm>.datebox>.title{
+    margin: 5px;
+    font-size: 16px;
+    font-weight: bold;
+}
+#bookingForm>.datebox>input{
+    margin: 5px;
+    border: 0px;
+}
+#bookingForm>.timebox{
+    width: auto;
+    max-width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-items: flex-start;
+}
+#bookingForm>.timebox>.title{
+    margin: 5px;
+    font-size: 16px;
+    font-weight: bold;
+}
+#bookingForm>.timebox>.noonbox{
+    width: 50%;
+    margin: 5px;
+    display: flex;
+    flex-flow: row nowrap;
+}
+#bookingForm>.timebox>.noonbox>.noon{
+    width: auto;
+    margin: 5px;
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+}
+#bookingForm>.timebox>.noonbox>.noon>div{
+    margin-left: 10px;
+}
+#bookingForm>.timebox>.noonbox>.afternoon{
+    width: auto;
+    margin: 5px;
+    display: flex;
+    align-items: center;
+    margin: 10px;
+}
+#bookingForm>.timebox>.noonbox>.afternoon>div{
+    margin-left: 10px;
+}
+input[type='radio']:after {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    top: -2px;
+    left: -1px;
+    position: relative;
+    background-color: white;
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 2px solid white;
+}
+
+input[type='radio']:checked:after {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    top: -2px;
+    left: -1px;
+    position: relative;
+    background-color: #448899;
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 2px solid white;
+}
+#bookingForm>.paybox{
+    width: 100%;
+    margin: 5px;
+    display: flex;
+    flex-flow: row nowrap;
+}
+#bookingForm>.paybox>.title{
+    margin: 5px;
+    font-size: 16px;
+    font-weight: bold;
+}
+#bookingForm>.paybox>.pay{
+    margin: 5px;
+    font-size: 16px;
+}
+#bookingForm>button{
+    width: 160px;
+    height: 35px;
+    margin: 5px;
+    color: white;
+    background-color:#448899;
+    border: none;
+    border-radius: 10px;
+    font-size: 19px;
+}
+#attractionInfoBox{
+    margin: 5px;
+}
+#attractionInfoBox>.abstract{
+    font-size: 16px;
+    line-height:150%;
+    margin: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+#attractionInfoBox>.address>.title{
+    font-size: 16px;
+    font-weight: bold;
+    margin: 5px;
+    /* margin-top: 10px;
+    margin-bottom: 10px; */
+}
+#attractionInfoBox>.address>.content{
+    font-size: 16px;
+    margin: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+#attractionInfoBox>.Transportation>.title{
+    font-size: 16px;
+    font-weight: bold;
+    margin: 5px;
+    /* margin-top: 10px;
+    margin-bottom: 10px; */
+}
+ #attractionInfoBox>.Transportation>.content{
+    font-size: 16px;
+    line-height:150%;
+    margin: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+/*  */

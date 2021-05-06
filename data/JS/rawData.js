@@ -14,7 +14,7 @@ var searchKWord = searchKeyword[1];
 if (searchKeyword[1] == undefined) {
     searchKWord = "";
 };
-var SKword = "/attractions?keyword=" + searchKWord
+var SKword = "/api/attractions?keyword=" + searchKWord
 var req = new XMLHttpRequest();
 req.open("get", SKword, false)
 req.onload = function rawData() {
@@ -41,10 +41,15 @@ for (i = 0; i < contextArea["data"].length; i++) {
 items.push(contextArea["nextPage"]);
 var lessShow = (items.length - 1);
 var endtimes = 0;
+var nextPage = contextArea["nextPage"]
 var firstpage = function addImg() {
     var parent = document.getElementById('contentArea');
     for (var i = 0; i < lessShow; i++) {
-        var newDiv = document.createElement('div');
+        var newDiv = document.createElement('a');
+        var ID_URL = "/attraction/" + items[i][3]
+        newDiv.href = ID_URL
+        newDiv.style.color = "black"
+        newDiv.style.textDecoration = "none"
         newDiv.setAttribute("class", "item")
         newDiv.setAttribute("id", `item_${i}`)
         parent.appendChild(newDiv);
@@ -85,6 +90,7 @@ var firstpage = function addImg() {
         textBox.style.height = "20px";
         textBox.style.width = "100%";
         textBox.style.fontSize = "16px";
+        textBox.style.color = "black";
         textBox.style.textAlign = "left";
         textBox.style.fontWeight = "bold";
         textBox.style.paddingLeft = "5px"
@@ -122,12 +128,12 @@ window.addEventListener('scroll', () => {
     let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
     let clientHeight = document.documentElement.clientHeight || document.body.clientHeight;
     let scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
-    if (scrollTop + clientHeight > scrollHeight - 1) {
+    if (nextPage == "null") {
+
+    } else if (scrollTop + clientHeight > scrollHeight - 1) {
         endtimes++;
         var Req = new XMLHttpRequest();
         Req.open("get", SKword + "&page=" + endtimes, false)
-        // Req.onload = function () {
-        // };
         Req.send(null);
         var contextArea = JSON.parse(Req.responseText);
         if (contextArea["data"] == "超出檢索範圍") {
@@ -137,17 +143,17 @@ window.addEventListener('scroll', () => {
             for (i = 0; i < contextArea["data"].length; i++) {
                 var item = [];
                 var file = contextArea["data"][i]["images"].split("http://");
-                item.push(contextArea["data"][i]["address"]);
-                item.push(contextArea["data"][i]["category"]);
-                item.push(contextArea["data"][i]["description"]);
-                item.push(contextArea["data"][i]["id"]);
+                item.push(contextArea["data"][i]["address"]);//0
+                item.push(contextArea["data"][i]["category"]);//1
+                item.push(contextArea["data"][i]["description"]);//2
+                item.push(contextArea["data"][i]["id"]);//3
                 var img = "http://" + file[1];
-                item.push(img);
-                item.push(contextArea["data"][i]["latitude"]);
-                item.push(contextArea["data"][i]["longitude"]);
-                item.push(contextArea["data"][i]["mrt"]);
-                item.push(contextArea["data"][i]["name"]);
-                item.push(contextArea["data"][i]["transport"]);
+                item.push(img);//4
+                item.push(contextArea["data"][i]["latitude"]);//5
+                item.push(contextArea["data"][i]["longitude"]);//6
+                item.push(contextArea["data"][i]["mrt"]);//7
+                item.push(contextArea["data"][i]["name"]);//8
+                item.push(contextArea["data"][i]["transport"]);//9
                 items.push(item);
             };
             items.push(contextArea["nextPage"]);
@@ -157,7 +163,11 @@ window.addEventListener('scroll', () => {
             var parent = document.getElementById('contentArea');
             var scrollNowpage = endtimes * 12
             for (var i = 0; i < lessShow; i++) {
-                var newDiv = document.createElement('div');
+                var newDiv = document.createElement('a');
+                var ID_URL = "/attraction/" + items[i][3]
+                newDiv.href = ID_URL
+                newDiv.style.color = "black"
+                newDiv.style.textDecoration = "none"
                 newDiv.setAttribute("class", "item")
                 newDiv.setAttribute("id", `item_${scrollNowpage + i}`)
                 parent.appendChild(newDiv);
@@ -198,6 +208,7 @@ window.addEventListener('scroll', () => {
                 textBox.style.height = "20px";
                 textBox.style.width = "100%";
                 textBox.style.fontSize = "16px";
+                textBox.style.color = "black";
                 textBox.style.textAlign = "left";
                 textBox.style.fontWeight = "bold";
                 textBox.style.paddingLeft = "5px"
@@ -206,8 +217,8 @@ window.addEventListener('scroll', () => {
                 infoBox.style.height = "10%";
                 infoBox.style.display = "flex";
                 infoBox.style.flexDirection = "row";
-                infoBox.style.paddingLeft = "5px"
-                infoBox.style.paddingLeft = "5px"
+                infoBox.style.paddingLeft = "5px";
+                infoBox.style.paddingRight = "5px";
                 infoBox_L.style.width = "50%";
                 infoBox_L.style.fontSize = "16px";
                 infoBox_L.style.textAlign = "left";
@@ -226,6 +237,8 @@ window.addEventListener('scroll', () => {
                 boxConten.appendChild(imgBox);
                 boxConten.appendChild(textBox);
                 boxConten.appendChild(infoBox);
+                ////////////////////////////////
+
             };
         }
         addImg();
