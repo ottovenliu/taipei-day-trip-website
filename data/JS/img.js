@@ -99,7 +99,7 @@ function slitimg() {
     }
     function changeCircleColor(preIndex, currentIndex) {
         circles[preIndex].style.backgroundColor = "rgb(240, 240, 240)";
-        circles[currentIndex].style.backgroundColor = "rgb(245, 40, 40)";
+        circles[currentIndex].style.backgroundColor = "#448899";
     }
     //圖片滑動事件添加
     var multiImages = document.getElementById("imagesscroll");
