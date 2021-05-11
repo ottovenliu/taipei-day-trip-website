@@ -1,0 +1,104 @@
+#signBackground{
+    /* display: none; */
+    width: 100%;
+    height: 100%;
+    z-index: 999999;
+    position: fixed;
+    background-color: gray;
+    top: 0px;
+    opacity: 0.5;
+}
+#signBox{
+    width: 340px;
+    height: auto;
+    z-index: 9999999;
+    position:fixed;
+    top:80px;
+    background-color: white;
+    border-radius: 6px;
+    overflow: hidden;
+}
+#signBox>.head{
+    width: 100%;
+    height: 10px;
+    background: linear-gradient(135deg, #AADDEE 0%, #66AABB 100%);
+}
+#signBox>img{
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    top: 27px;
+    /* right: 5px; */
+    left: 314px
+}
+#signBox>.signinInfobox>form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#signBox>.signinInfobox>form>.title{
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 15px;
+}
+#signBox>.signinInfobox>form>input{
+    width: 300px;
+    height: 47px;
+    border-radius: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-color: #CCCCCC;
+    border: 1px solid #CCCCCC;
+    padding-left: 10px; ;
+
+}
+#signBox>.signinInfobox>form>button{
+    width: 310px;
+    height: 47px;
+    margin: 5px;
+    color: white;
+    background-color: #448899;
+    border: none;
+    border-radius: 10px;
+    font-size: 19px;
+}
+#signBox>.signinInfobox>form>.content{
+    display: flex;
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+#signBox>.signupUpfobox>form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#signBox>.signupUpfobox>form>.title{
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 15px;
+}
+#signBox>.signupUpfobox>form>input{
+    width: 300px;
+    height: 47px;
+    border-radius: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-color: #CCCCCC;
+    border: 1px solid #CCCCCC;
+    padding-left: 10px; ;
+}
+#signBox>.signupUpfobox>form>button{
+    width: 310px;
+    height: 47px;
+    margin: 5px;
+    color: white;
+    background-color: #448899;
+    border: none;
+    border-radius: 10px;
+    font-size: 19px;
+}
+#signBox>.signupUpfobox>form>.content{
+    display: flex;
+    margin-top: 5px;
+    margin-bottom: 15px;
+}

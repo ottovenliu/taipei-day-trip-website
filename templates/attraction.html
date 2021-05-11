@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="/style/Footer.css" type="text/css">
     <link rel="stylesheet" href="/style/Main_attraction.css" type="text/css">
     <link rel="stylesheet" href="/style/img.css" type="text/css">
+    <link rel="stylesheet" href="/style/signB&B.css" type="text/css">
 
 </head>
 
@@ -24,6 +25,35 @@
 </header>
 
 <body>
+    <div id="signBackground"></div>
+    <div id="signBox">
+        <!-- 預設燈入為初始畫面 點擊後變更為註冊畫面 -->
+        <!--    div display切換 or JS生成 -->
+        <div class="head"></div>
+        <img src="/img/icon/close.png" alt="">
+        <div class="signinInfobox">
+            <form action="">
+                <div class="title">登入會員帳號</div>
+                <input type="text" name="signinEmail" placeholder="請輸入電子郵件" required>
+                <input type="text" name="signinPassword" placeholder="請輸入密碼" required>
+                <button>Submit</button>
+                <div class="content">還沒有註冊嗎?點此<p>註冊</p>
+                </div>
+            </form>
+        </div>
+        <div class="signupUpfobox">
+            <form action="">
+                <div class="title">註冊會員帳號</div>
+                <input type="text" name="signupUsername" placeholder="請輸入姓名" required>
+                <input type="text" name="signupPassword" placeholder="請輸入電子郵件" required>
+                <input type="text" name="signupPassword" placeholder="請輸入密碼" required>
+                <button>Submit</button>
+                <div class="content">已經有帳號了嗎?點此<p>登入</p>
+                </div>
+            </form>
+        </div>
+
+    </div>
     <div class="contentSpace">
         <div id="bookingInfoBox">
             <div id="Bimgbox">
