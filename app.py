@@ -1,11 +1,16 @@
 from flask import *
+from datetime import timedelta
 import mysql.connector
+import os
+import json
+
 app = Flask(__name__,
             static_url_path="/",
             static_folder="data")
 app.config["JSON_AS_ASCII"] = False
 app.config["TEMPLATES_AUTO_RELOAD"] = True
-
+app.config['SECRET_KEY'] = os.urandom(24)
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=31)
 # Pages
 
 
@@ -50,22 +55,6 @@ def APIattraction(id):
     }
 
     return jsonify(printout)
-
-
-@app.route("/attraction/<id>")
-def attraction(id):
-    print(id)
-    return render_template("attraction.html")
-
-
-@app.route("/booking")
-def booking():
-    return render_template("booking.html")
-
-
-@app.route("/thankyou")
-def thankyou():
-    return render_template("thankyou.html")
 
 
 @app.route("/api/attractions")
@@ -143,9 +132,166 @@ def APIattractions():
     return jsonify(data_printout[0])
 
 
-@app.route("/test")
-def test():
-    return render_template("test.html")
+@app.route("/api/user", methods=["POST", "GET"])  # waiting
+def API():
+    mydb = mysql.connector.Connect(
+        host="localhost",
+        user="my_user",
+        password="123456789",
+        database="my_db",
+        charset="utf8"
+    )
+    check_username = session.get('username')  # 確認是否登入中
+    print(check_username)
+    # if check_username:
+    signup_message = request.args.get("signup_account", "")
+    signin_message = request.args.get("signin_account", "")
+    signstatus_message = request.args.get("signstatus", "")
+    signup_message.encode('utf-8')
+    signin_message.encode('utf-8')
+    signstatus_message.encode('utf-8')
+    mycursor = mydb.cursor()
+    if(signstatus_message != ""):
+        check_username = session.get('username')
+        if(check_username == None):
+            user_info = {
+                "data": "null"
+            }
+            return jsonify(user_info)
+        else:
+            sql_json = "SELECT raw_id,user_name,user_email FROM user WHERE user_email = '{username_db}'".format(
+                username_db=check_username)
+            mycursor.execute(sql_json)
+            myresult = mycursor.fetchall()
+            user_info = {
+                "data": {
+                    "id": myresult[0][0],
+                    "name": myresult[0][1],
+                    "email": myresult[0][2]
+                }
+            }
+            return jsonify(user_info)
+    elif(signup_message != ""):
+        sql_json = "SELECT raw_id,user_name,user_email FROM user WHERE user_email = '{username_db}'".format(
+            username_db=signup_message)
+        mycursor.execute(sql_json)
+        myresult = mycursor.fetchall()
+        if len(myresult) != 0:
+            user_info = {
+                "data": {
+                    "id": myresult[0][0],
+                    "name": myresult[0][1],
+                    "email": myresult[0][2]
+                }
+            }
+            return jsonify(user_info)
+        else:
+            user_info = {
+                "data": "null"
+            }
+            return jsonify(user_info)
+    elif(signin_message != ""):
+        sql_json = "SELECT user_email,user_password FROM user WHERE user_email = '{username_db}'".format(
+            username_db=signin_message)
+        mycursor.execute(sql_json)
+        myresult = mycursor.fetchall()
+        if len(myresult) != 0:
+            user_info = {
+                "data": {
+                    "email": myresult[0][0],
+                    "password": myresult[0][1]
+                }
+            }
+
+            return jsonify(user_info)
+        else:
+            user_info = {
+                "data": "null"
+            }
+            return jsonify(user_info)
+    else:
+        user_info = {
+            "data": "null"
+        }
+        return jsonify(user_info)
+    # else:
+    #     user_info = {
+    #         "data": "null"
+    #     }
+        # return jsonify(user_info)
+
+
+@app.route("/attraction/<id>")
+def attraction(id):
+    print(id)
+    return render_template("attraction.html")
+
+
+@app.route("/A_signup", methods=["POST", "GET"])
+def A_signup():
+    mydb = mysql.connector.Connect(
+        host="localhost",
+        user="my_user",
+        password="123456789",
+        database="my_db",
+        charset="utf8"
+    )
+    signup_name = request.form["signupUsername"]
+    signup_account = request.form["signupEnail"]
+    signup_password = request.form["signupPassword"]
+    mycursor = mydb.cursor()
+    signup_sql = "INSERT INTO user (user_name,user_email,user_password,signup_time) VALUES(%s, %s, %s,now())"
+    val = (signup_name, signup_account, signup_password)
+    mycursor.execute(signup_sql, val)
+    mydb.commit()
+    return redirect("/")
+
+
+@app.route("/A_signin", methods=["POST", "GET"])
+def A_signin():
+    mydb = mysql.connector.Connect(
+        host="localhost",
+        user="my_user",
+        password="123456789",
+        database="my_db",
+        charset="utf8"
+    )
+    Account = request.form["signinEmail"]
+    Password = request.form["signinPassword"]
+    session['username'] = Account
+    userDataBox = []
+    mycursor = mydb.cursor()
+    sql = "SELECT * FROM user WHERE user_email = '{username}'".format(
+        username=Account)
+    mycursor.execute(sql)
+    myresult = mycursor.fetchall()
+    if (myresult == []):
+        return "無此帳號"
+    for i in myresult[0]:
+        userDataBox.append(i)
+    if(Account == userDataBox[2]):
+        if Password == userDataBox[3]:
+            print(session)
+            return redirect("/")
+
+        else:
+            return "密碼錯誤"
+
+
+@app.route("/A_signout", methods=["POST", "GET"])
+def A_signout():
+    session['username'] = False
+    return redirect("/")
+
+
+@app.route("/booking")
+def booking():
+    return render_template("booking.html")
+
+
+@app.route("/thankyou")
+def thankyou():
+    return render_template("thankyou.html")
 
 
 @app.errorhandler(500)
