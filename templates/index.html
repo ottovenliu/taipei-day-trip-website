@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="/style/Main.css" type="text/css">
     <link rel="stylesheet" href="/style/Top.css" type="text/css">
     <link rel="stylesheet" href="/style/Footer.css" type="text/css">
+    <link rel="stylesheet" href="/style/signB&B.css" type="text/css">
     <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js"
         integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+"
         crossorigin="anonymous"></script>
@@ -20,17 +21,52 @@
 </head>
 
 <header class="titleAndindex">
-    <!-- box -->
     <div class="headerIndexbox">
         <div>台北一日遊</div>
         <div class="box">
             <div>預定行程</div>
-            <div>登入/註冊</div>
+            <div id="singnboxBTN" onclick="showsignbox() ">登入/註冊</div>
         </div>
     </div>
 </header>
 
 <body>
+    <div id="signBackground" onclick="closesignbox()"></div>
+    <div id="signBox">
+        <!-- 預設燈入為初始畫面 點擊後變更為註冊畫面 -->
+        <!--    div display切換 or JS生成 -->
+        <div class="head"></div>
+        <img src="/img/icon/close.png" alt="" onclick="closesignbox()">
+        <div id="signinInfobox" class="signinInfobox">
+            <form id="A_signin" action="/A_signin" method="POST">
+                <div class="title">登入會員帳號</div>
+                <input type="text" name="signinEmail" placeholder="請輸入電子郵件" required>
+                <input type="password" name="signinPassword" placeholder="請輸入密碼" required>
+                <div class="button" onclick="signin()">
+                    <p>登入帳戶</p>
+                </div>
+                <div id="signinMessage"></div>
+                <div class="content">還沒有註冊嗎?點此<p onclick="showsignUpInfo()">註冊</p>
+                </div>
+            </form>
+        </div>
+        <div id="signupInfobox" class="signupInfobox">
+            <form id="A_signup" action="/api/user" method="POST">
+                <div class="title">註冊會員帳號</div>
+                <input type="text" name="signupUsername" placeholder="請輸入姓名" required>
+                <input type="text" name="signupEnail" placeholder="請輸入電子郵件" required>
+                <input type="text" name="signupPassword" placeholder="請輸入密碼" required>
+                <div class="button" onclick="signup()">
+                    <p>
+                        註冊新帳戶
+                    </p>
+                </div>
+                <div id="signupMessage"></div>
+                <div class="content">已經有帳號了嗎?點此<p onclick="showsignInInfo()">登入</p>
+                </div>
+            </form>
+        </div>
+    </div>
     <div class="sloganAndsearch">
         <div class="img"><img class="sloganimg" src="/img/D.G.Hotel.png" alt="花園酒店素描"></div>
         <div class="box">
@@ -59,7 +95,8 @@
     <p>COPYRIGHT © 2021 台北一日遊</p>
 </footer>
 <script type="text/javascript" src="/JS/rawData.js"></script>
-<!-- <script type="text/javascript" src="/JS/scroll.js"></script> -->
 <script type="text/javascript" src="/JS/keywords.js"></script>
+<script type="text/javascript" src="/JS/sign.js"></script>
+<script type="text/javascript" src="/JS/click.js"></script>
 
 </html>
