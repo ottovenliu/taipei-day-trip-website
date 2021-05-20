@@ -1,3 +1,4 @@
+from re import split
 from flask import *
 from datetime import timedelta
 import mysql.connector
@@ -24,7 +25,7 @@ def APIattraction(id):
     mydb = mysql.connector.Connect(
         host="localhost",
         user="my_user",
-        password="nhAG*nn8Yu7V",
+        password="123456789",
         database="my_db"
     )
     # nhAG*nn8Yu7V
@@ -62,7 +63,7 @@ def APIattractions():
     mydb = mysql.connector.Connect(
         host="localhost",
         user="my_user",
-        password="nhAG*nn8Yu7V",
+        password="123456789",
         database="my_db"
     )
     # 參數整理
@@ -136,7 +137,7 @@ def API():
     mydb = mysql.connector.Connect(
         host="localhost",
         user="my_user",
-        password="nhAG*nn8Yu7V",
+        password="123456789",
         database="my_db",
         charset="utf8"
     )
@@ -145,7 +146,7 @@ def API():
     signstatus_message = request.args.get("signstatus", "")
     signstatus_message.encode('utf-8')
     mycursor = mydb.cursor()
-    if(signstatus_message != ""):
+    if(signstatus_message == "check"):
         check_username = session.get('username')
         if(check_username == None):
             user_info = {
@@ -157,6 +158,12 @@ def API():
                 username_db=check_username)
             mycursor.execute(sql_json)
             myresult = mycursor.fetchall()
+            if myresult == []:
+                user_info = {
+                    "data": "null"
+                }
+                return jsonify(user_info)
+
             userDataBox = []
             for i in myresult[0]:
                 userDataBox.append(i)
@@ -168,6 +175,7 @@ def API():
                 }
             }
             return jsonify(user_info)
+
     # signup_name = content["name"]
     signup_email = content["email"]
     signup_password = content["password"]
@@ -207,30 +215,76 @@ def API():
             return jsonify(signInfo)
 
 
+@app.route("/api/booking", methods=["POST", "GET"])
+def A_booking():
+    mydb = mysql.connector.Connect(
+        host="localhost",
+        user="my_user",
+        password="123456789",
+        database="my_db",
+        charset="utf8"
+    )
+    mycursor = mydb.cursor()
+    content = request.json
+    print("-----------------split--------------------")
+    if(content != None):
+        if(content["action"] == "insert"):
+            booking_insert = "INSERT INTO user_booking (user,attraction_id,attraction,date,time,booking_time) VALUES(%s, %s, %s, %s, %s,now())"
+            val = (content["username"], content["booking_attraction_id"], content["booking_attraction"],
+                   content["booking_date"], content["booking_time"])
+            mycursor.execute(booking_insert, val)
+            mydb.commit()
+            print("成功輸入")
+            return jsonify({"ok": True, "message": "成功輸入"})
+            # if (myresult == []):
+            #     return jsonify({"data": "null"})
+            # else:
+            #     booking_Infodata = []
+            #     for item in myresult:
+            #         dic = {
+            #             "attraction": {
+            #                 "id": item[1],
+            #                 "name": item[2],
+            #             },
+            #             "date": item[3],
+            #             "time": item[4]
+            #         }
+            #         booking_Infodata.append(dic)
+            #         print("已成功回送")
+            #     return jsonify(booking_Infodata)
+        elif(content["action"] == "check"):
+            booking_search = "SELECT user,attraction_id,attraction,date,booking_time,time FROM user_booking WHERE user = '{username_db}'".format(
+                username_db=content["username"])
+            mycursor.execute(booking_search)
+            myresult = mycursor.fetchall()
+            if (myresult == []):
+                return jsonify({"data": "null"})
+            else:
+                booking_Infodata = []
+                for item in myresult:
+                    dic = {
+                        "attraction": {
+                            "id": item[1],
+                            "name": item[2],
+                        },
+                        "date": item[3],
+                        "time": item[4]
+                    }
+                    booking_Infodata.append(dic)
+                    print("已成功回送")
+                return jsonify({"data": booking_Infodata})
+
+        else:
+            return jsonify({"error": True, "message": "無資料進來"})
+    else:
+        signInfo = {"ok": True}
+        return jsonify(signInfo)
+
+
 @app.route("/attraction/<id>")
 def attraction(id):
     print(id)
     return render_template("attraction.html")
-
-
-# @app.route("/A_signup", methods=["POST", "GET"])
-# def A_signup():
-#     mydb = mysql.connector.Connect(
-#         host="localhost",
-#         user="my_user",
-#         password="nhAG*nn8Yu7V",
-#         database="my_db",
-#         charset="utf8"
-#     )
-#     signup_name = request.form["signupUsername"]
-#     signup_account = request.form["signupEnail"]
-#     signup_password = request.form["signupPassword"]
-#     mycursor = mydb.cursor()
-#     signup_sql = "INSERT INTO user (user_name,user_email,user_password,signup_time) VALUES(%s, %s, %s,now())"
-#     val = (signup_name, signup_account, signup_password)
-#     mycursor.execute(signup_sql, val)
-#     mydb.commit()
-#     return redirect("/")
 
 
 @app.route("/A_signin", methods=["POST", "GET"])
@@ -238,7 +292,7 @@ def A_signin():
     mydb = mysql.connector.Connect(
         host="localhost",
         user="my_user",
-        password="nhAG*nn8Yu7V",
+        password="123456789",
         database="my_db",
         charset="utf8"
     )
@@ -271,6 +325,9 @@ def A_signout():
 
 @app.route("/booking")
 def booking():
+    check_username = session.get("username")
+    if(check_username == None):
+        return redirect("/")
     return render_template("booking.html")
 
 
@@ -295,5 +352,5 @@ def err_handler(e):
     })
 
 
-# app.run(port=3000, debug=True)
-app.run(host="0.0.0.0", port=3000, debug=True)
+app.run(port=3000, debug=True)
+# app.run(host="0.0.0.0", port=3000, debug=True)

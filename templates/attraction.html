@@ -16,9 +16,9 @@
 
 <header class="titleAndindex">
     <div class="headerIndexbox">
-        <div>台北一日遊</div>
+        <div onclick="gohomepage()">台北一日遊</div>
         <div class="box">
-            <div>預定行程</div>
+            <div onclick="booking()">預定行程</div>
             <div id="singnboxBTN" onclick="showsignbox() ">登入/註冊</div>
         </div>
     </div>
@@ -89,17 +89,17 @@
                     <form action="" id="bookingForm">
                         <div class="datebox">
                             <div class="title">選擇日期：</div>
-                            <input type="date">
+                            <input type="date" name="date">
                         </div>
                         <div class="timebox">
                             <div class="title">選擇時間：</div>
                             <div class="noonbox">
                                 <div class="noon">
-                                    <input type="radio" name="time" value="noon" onclick="noonselect()">
+                                    <input type="radio" name="time" id="noon" onclick="noonselect()">
                                     <div>上半天</div>
                                 </div>
                                 <div class="afternoon">
-                                    <input type="radio" name="time" value="afternoon" onclick="afternoonselect()">
+                                    <input type="radio" name="time" id="afternoon" onclick="afternoonselect()">
                                     <div>下半天</div>
                                 </div>
                             </div>
@@ -108,7 +108,7 @@
                             <div class="title">導覽費用：</div>
                             <div id="pay" class="pay"></div>
                         </div>
-                        <button>開始預訂行程</button>
+                        <div id="bookingBTM" onclick="booking()">開始預訂行程</div>
                     </form>
                 </div>
             </div>

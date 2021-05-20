@@ -6,6 +6,8 @@ function signup() { //確保同email不重複申請帳號
     const signupEnail = signupEnailElement[0].value;
     const signupPasswordElement = document.getElementsByName("signupPassword");
     const signupPassword = signupPasswordElement[0].value;
+
+
     let req_account = new XMLHttpRequest();
     let search_url = "/api/user";
     var data = {}
@@ -66,6 +68,7 @@ function signstatus() {
     let req_account = new XMLHttpRequest();
     let search_url = "/api/user?signstatus=" + signstatus;
     req_account.open("get", search_url);
+    req_account.send(null)
     req_account.onload = function () {
         let contextArea = JSON.parse(req_account.responseText);
         console.log(contextArea);
@@ -73,9 +76,16 @@ function signstatus() {
             let box = document.getElementById("singnboxBTN");
             box.textContent = "登出"
             box.onclick = function () { location.href = "/A_signout" }
+            let booking = document.getElementById("bookingBTM");
+            if (booking != null) {
+                booking.onclick = booking()
+            }
         }
     }
-    req_account.send()
 
 };
+function signout() {
+    let box = document.getElementById("singnboxBTN");
+    box.onclick = function () { location.href = "/A_signout" }
+}
 signstatus();

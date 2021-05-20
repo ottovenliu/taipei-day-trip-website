@@ -11,6 +11,7 @@
     left: 0px;
     background-color: white;
     padding: 5px;
+    border-bottom: 1px solid lightgray;
 }
 .headerIndexbox{
     width: 1200px;
