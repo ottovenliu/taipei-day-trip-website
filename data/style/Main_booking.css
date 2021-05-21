@@ -22,6 +22,16 @@ body{
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
+    align-items: center;
+    font-size: 19px;
+    font-weight: 700;
+    margin-top: 40px;
+}
+#nobookingContent{
+    font-size: 16px;
+    font-weight: 400;
+    margin-top: 40px;
+    margin-bottom: 40px;
 }
 #bookingContent>.connectInfo>.title{
     margin-bottom: 15px;
@@ -145,11 +155,35 @@ body{
     color: #448899;
 }
 .Delete_icon{
+    /* bottom: -5%; */
     height: 30px;
     width: 30px;
-    background-color: red;
     position: absolute;
-    right: 10%;
+    right: 10px;
     top: 10%;
+    cursor: pointer;
+}
+.Delete_icon>img{
+    height: 100%;
+    cursor: pointer;
+
+}
+@media (max-width:600px) {
+    .attractionBox{
+        display: flex;
+        position: relative;
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .Delete_icon{
+        bottom: -5%;
+        height: 30px;
+        width: 30px;
+        position: absolute;
+        right: 10px;
+        top: auto;
+        cursor: pointer;
+    }
 }
 

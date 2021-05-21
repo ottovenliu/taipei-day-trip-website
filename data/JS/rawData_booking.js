@@ -49,18 +49,21 @@ function getBookingData() {
                     document.querySelector("#attractionContent").innerHTML = items[items.length - 1][6]
                     document.querySelector("#dateContent").innerHTML = items[items.length - 1][1]
                     document.querySelector("#timeContent").innerHTML = items[items.length - 1][2]
+                    let totalpayment
                     let payment
                     if (items[items.length - 1][1] == "noon") {
                         payment = "新台幣 2,000 元"
+                        totalpayment = " 2,000 "
                     } else {
                         payment = "新台幣 2,500 元"
+                        totalpayment = " 2,500 "
                     }
                     document.querySelector("#payContent").innerHTML = payment
+                    document.querySelector("#totalaccount").innerHTML = totalpayment
                     document.querySelector("#locationContent").innerHTML = items[items.length - 1][5]
                     document.querySelector("#bookingattractionBox > div > div.Delete_icon").setAttribute("id", items[items.length - 1][0])
                     document.querySelector("#bookingattractionBox > div > div.Delete_icon").addEventListener('click', deletebooking, false);
                     function deletebooking() {
-                        alert("事件监听");
                         let databox = {}
                         databox.id = document.querySelector("#bookingattractionBox > div > div.Delete_icon").id
                         databox.action = "delete"
@@ -70,7 +73,6 @@ function getBookingData() {
                         Req_delete.open("post", booking_url, true);
                         Req_delete.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
                         Req_delete.onload = function () {
-                            alert("成功連線")
                             location.href = "/booking";
                         }
                         Req_delete.send(JSON.stringify(databox))

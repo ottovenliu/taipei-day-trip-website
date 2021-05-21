@@ -32,6 +32,22 @@ function booking() {
             showsignbox();
         }
         else {
+            location.href = "/booking"
+        }
+    }
+}
+function booking_submit() {
+    let signstatus = "check"
+    let req_account = new XMLHttpRequest();
+    let search_url = "/api/user?signstatus=" + signstatus;
+    req_account.open("get", search_url);
+    req_account.send()
+    req_account.onload = function () {
+        let contextArea = JSON.parse(req_account.responseText);
+        if (contextArea["data"] == "null") {
+            showsignbox();
+        }
+        else {
             if (document.getElementById("bookingBTM") == null) {
                 location.href = "/booking"
             }
