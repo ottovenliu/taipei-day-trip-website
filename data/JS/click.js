@@ -59,6 +59,9 @@ function booking() {
                     databox.booking_attraction = booking_attraction
                     databox.booking_date = booking_date
                     databox.booking_time = booking_time
+                    databox.booking_imgsrc = document.querySelector("#imagesscroll > img:nth-child(1)").src
+                    databox.booking_location = document.querySelector("#addresscontent").innerHTML
+                    console.log(databox)
                     databox.action = "insert"
                     let Req_account = new XMLHttpRequest();
                     let booking_url = "/api/booking";

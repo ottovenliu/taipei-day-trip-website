@@ -229,31 +229,15 @@ def A_booking():
     print("-----------------split--------------------")
     if(content != None):
         if(content["action"] == "insert"):
-            booking_insert = "INSERT INTO user_booking (user,attraction_id,attraction,date,time,booking_time) VALUES(%s, %s, %s, %s, %s,now())"
-            val = (content["username"], content["booking_attraction_id"], content["booking_attraction"],
+            booking_insert = "INSERT INTO user_booking (user,attraction_id,attraction,location,imgsrc,date,time,booking_time) VALUES(%s, %s, %s, %s, %s, %s, %s,now())"
+            val = (content["username"], content["booking_attraction_id"], content["booking_attraction"], content["booking_location"], content["booking_imgsrc"],
                    content["booking_date"], content["booking_time"])
             mycursor.execute(booking_insert, val)
             mydb.commit()
             print("成功輸入")
             return jsonify({"ok": True, "message": "成功輸入"})
-            # if (myresult == []):
-            #     return jsonify({"data": "null"})
-            # else:
-            #     booking_Infodata = []
-            #     for item in myresult:
-            #         dic = {
-            #             "attraction": {
-            #                 "id": item[1],
-            #                 "name": item[2],
-            #             },
-            #             "date": item[3],
-            #             "time": item[4]
-            #         }
-            #         booking_Infodata.append(dic)
-            #         print("已成功回送")
-            #     return jsonify(booking_Infodata)
         elif(content["action"] == "check"):
-            booking_search = "SELECT user,attraction_id,attraction,date,booking_time,time FROM user_booking WHERE user = '{username_db}'".format(
+            booking_search = "SELECT id,user,attraction_id,attraction,imgsrc,location,date,booking_time,time FROM user_booking WHERE user = '{username_db}'".format(
                 username_db=content["username"])
             mycursor.execute(booking_search)
             myresult = mycursor.fetchall()
@@ -263,16 +247,25 @@ def A_booking():
                 booking_Infodata = []
                 for item in myresult:
                     dic = {
+                        "booking_id": item[0],
                         "attraction": {
-                            "id": item[1],
-                            "name": item[2],
+                            "id": item[2],
+                            "name": item[3],
+                            "imgsrc": item[4],
+                            "location": item[5]
                         },
-                        "date": item[3],
-                        "time": item[4]
+                        "date": item[6],
+                        "time": item[8]
                     }
                     booking_Infodata.append(dic)
                     print("已成功回送")
                 return jsonify({"data": booking_Infodata})
+        elif(content["action"] == "delete"):
+            booking_search = "DELETE from user_booking WHERE id = '{id_db}'".format(
+                id_db=content["id"])
+            mycursor.execute(booking_search)
+            mydb.commit()
+            return jsonify({"ok": True, "message": "成功刪除"})
 
         else:
             return jsonify({"error": True, "message": "無資料進來"})
