@@ -25,10 +25,10 @@ def APIattraction(id):
     mydb = mysql.connector.Connect(
         host="localhost",
         user="my_user",
-        password="nhAG*nn8Yu7V",
+        password="123456789",
         database="my_db"
     )
-    # nhAG*nn8Yu7V
+    # PW:nhAG*nn8Yu7V
     # 數據庫查詢
     mycursor = mydb.cursor()
     sql_page = "SELECT web_id,name,category,description,address,transport,mrt,latitude,longitude,imges FROM taipei_travel WHERE web_id = {id}".format(
@@ -63,7 +63,7 @@ def APIattractions():
     mydb = mysql.connector.Connect(
         host="localhost",
         user="my_user",
-        password="nhAG*nn8Yu7V",
+        password="123456789",
         database="my_db"
     )
     # 參數整理
@@ -137,7 +137,7 @@ def API():
     mydb = mysql.connector.Connect(
         host="localhost",
         user="my_user",
-        password="nhAG*nn8Yu7V",
+        password="123456789",
         database="my_db",
         charset="utf8"
     )
@@ -220,13 +220,46 @@ def A_booking():
     mydb = mysql.connector.Connect(
         host="localhost",
         user="my_user",
-        password="nhAG*nn8Yu7V",
+        password="123456789",
         database="my_db",
         charset="utf8"
     )
     mycursor = mydb.cursor()
+    booking_message = request.args.get("bookingstatus", "")
     content = request.json
-    print("-----------------split--------------------")
+    if(booking_message == "check"):
+        check_username = session.get("username")
+        booking_user = "SELECT * FROM user WHERE user_email = '{username}'".format(
+            username=check_username)
+        mycursor.execute(booking_user)
+        myresult = mycursor.fetchall()
+        print(myresult)
+        if (myresult == []):
+            return jsonify({"data": "null"})
+        else:
+            booking_user = "SELECT * FROM user_booking WHERE user = '{username}'".format(
+                username=myresult[0][1])
+            mycursor.execute(booking_user)
+            myresult = mycursor.fetchall()
+            print(myresult)
+            if(myresult == []):
+                return jsonify({"data": "null"})
+            booking_Infodata = []
+            for item in myresult:
+                dic = {
+                    "booking_id": item[0],
+                    "attraction": {
+                        "id": item[2],
+                        "name": item[3],
+                        "imgsrc": item[4],
+                        "location": item[5]
+                    },
+                    "date": item[6],
+                    "time": item[8]
+                }
+                booking_Infodata.append(dic)
+            print("已成功回送")
+            return jsonify({"data": booking_Infodata})
     if(content != None):
         if(content["action"] == "insert"):
             booking_insert = "INSERT INTO user_booking (user,attraction_id,attraction,location,imgsrc,date,time,booking_time) VALUES(%s, %s, %s, %s, %s, %s, %s,now())"
@@ -236,42 +269,28 @@ def A_booking():
             mydb.commit()
             print("成功輸入")
             return jsonify({"ok": True, "message": "成功輸入"})
-        elif(content["action"] == "check"):
-            booking_search = "SELECT id,user,attraction_id,attraction,imgsrc,location,date,booking_time,time FROM user_booking WHERE user = '{username_db}'".format(
-                username_db=content["username"])
-            mycursor.execute(booking_search)
-            myresult = mycursor.fetchall()
-            if (myresult == []):
-                return jsonify({"data": "null"})
-            else:
-                booking_Infodata = []
-                for item in myresult:
-                    dic = {
-                        "booking_id": item[0],
-                        "attraction": {
-                            "id": item[2],
-                            "name": item[3],
-                            "imgsrc": item[4],
-                            "location": item[5]
-                        },
-                        "date": item[6],
-                        "time": item[8]
-                    }
-                    booking_Infodata.append(dic)
-                    print("已成功回送")
-                return jsonify({"data": booking_Infodata})
-        elif(content["action"] == "delete"):
-            booking_search = "DELETE from user_booking WHERE id = '{id_db}'".format(
-                id_db=content["id"])
-            mycursor.execute(booking_search)
-            mydb.commit()
-            return jsonify({"ok": True, "message": "成功刪除"})
-
         else:
             return jsonify({"error": True, "message": "無資料進來"})
     else:
         signInfo = {"ok": True}
         return jsonify(signInfo)
+
+
+@app.route("/api/booking/<booking_id>", methods=["DELETE"])
+def booking_delete(booking_id):
+    mydb = mysql.connector.Connect(
+        host="localhost",
+        user="my_user",
+        password="123456789",
+        database="my_db",
+        charset="utf8"
+    )
+    mycursor = mydb.cursor()
+    booking_search = "DELETE from user_booking WHERE id = '{id_db}'".format(
+        id_db=booking_id)
+    mycursor.execute(booking_search)
+    mydb.commit()
+    return jsonify({"ok": True, "message": "成功刪除"})
 
 
 @app.route("/attraction/<id>")
@@ -285,7 +304,7 @@ def A_signin():
     mydb = mysql.connector.Connect(
         host="localhost",
         user="my_user",
-        password="nhAG*nn8Yu7V",
+        password="123456789",
         database="my_db",
         charset="utf8"
     )
@@ -345,5 +364,5 @@ def err_handler(e):
     })
 
 
-# app.run(port=3000, debug=True)
-app.run(host="0.0.0.0", port=3000, debug=True)
+app.run(port=3000, debug=True)
+# app.run(host="0.0.0.0", port=3000, debug=True)

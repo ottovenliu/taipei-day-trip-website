@@ -11,13 +11,10 @@ function getBookingData() {
         else {
             let name = contextArea["data"]["name"]
             document.querySelector("#username").innerText = name
-            let databox = {}
-            databox.username = name
-            databox.action = "check"
+            let action = "check"
             let Req_account = new XMLHttpRequest();
-            let booking_url = "/api/booking";
-            Req_account.open("post", booking_url, true);
-            Req_account.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+            let booking_url = "/api/booking?bookingstatus=" + action;
+            Req_account.open("get", booking_url, true);
             Req_account.onload = function () {
                 let contextArea = JSON.parse(Req_account.responseText);
                 if (contextArea["data"] == "null") {
@@ -43,7 +40,7 @@ function getBookingData() {
                     }
                     console.log(items)
                     document.querySelector("#nobookingContent").style.display = "none"
-                    document.querySelector("#bookingattractionBox > div > div.imgbox").style.backgroundImage = "url(" + items[items.length - 1][4] + ")"
+                    document.querySelector("#bookingattractionBox > div > div.imgbox").style.backgroundImage = "url(" + items[items.length - 1][5] + ")"
                     document.querySelector("#bookingattractionBox > div > div.imgbox").style.backgroundSize = "300px"
                     document.querySelector("#bookingattractionBox > div > div.imgbox").style.backgroundPosition = "center"
                     document.querySelector("#attractionContent").innerHTML = items[items.length - 1][6]
@@ -60,27 +57,23 @@ function getBookingData() {
                     }
                     document.querySelector("#payContent").innerHTML = payment
                     document.querySelector("#totalaccount").innerHTML = totalpayment
-                    document.querySelector("#locationContent").innerHTML = items[items.length - 1][5]
+                    document.querySelector("#locationContent").innerHTML = items[items.length - 1][4]
                     document.querySelector("#bookingattractionBox > div > div.Delete_icon").setAttribute("id", items[items.length - 1][0])
                     document.querySelector("#bookingattractionBox > div > div.Delete_icon").addEventListener('click', deletebooking, false);
                     function deletebooking() {
-                        let databox = {}
-                        databox.id = document.querySelector("#bookingattractionBox > div > div.Delete_icon").id
-                        databox.action = "delete"
-                        console.log(databox)
+                        let id = document.querySelector("#bookingattractionBox > div > div.Delete_icon").id
                         let Req_delete = new XMLHttpRequest();
-                        let booking_url = "/api/booking";
-                        Req_delete.open("post", booking_url, true);
-                        Req_delete.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+                        let booking_url = "/api/booking/" + id;
+                        Req_delete.open("DELETE", booking_url, true);
                         Req_delete.onload = function () {
                             location.href = "/booking";
                         }
-                        Req_delete.send(JSON.stringify(databox))
+                        Req_delete.send()
                     }
                 }
 
             }
-            Req_account.send(JSON.stringify(databox))
+            Req_account.send()
         }
     }
     req_account.send()
