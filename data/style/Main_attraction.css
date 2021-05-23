@@ -213,15 +213,22 @@ input[type='radio']:checked:after {
     margin: 5px;
     font-size: 16px;
 }
-#bookingForm>button{
+#bookingBTM{
     width: 160px;
     height: 35px;
     margin: 5px;
+    padding-right: auto;
+    padding-left: auto;
     color: white;
     background-color:#448899;
     border: none;
     border-radius: 10px;
     font-size: 19px;
+    display: flex;
+    flex-direction: column;
+    align-content: space-around;
+    justify-content: center;
+    align-items: center;
 }
 #attractionInfoBox{
     margin: 5px;

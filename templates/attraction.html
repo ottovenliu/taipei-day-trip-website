@@ -11,36 +11,37 @@
     <link rel="stylesheet" href="/style/Main_attraction.css" type="text/css">
     <link rel="stylesheet" href="/style/img.css" type="text/css">
     <link rel="stylesheet" href="/style/signB&B.css" type="text/css">
+    <link rel="stylesheet" href="/style/Top.css" type="text/css">
 
 </head>
 
 <header class="titleAndindex">
     <div class="headerIndexbox">
-        <div>台北一日遊</div>
+        <div class="BTN" onclick="gohomepage()">台北一日遊</div>
         <div class="box">
-            <div>預定行程</div>
-            <div id="singnboxBTN" onclick="showsignbox() ">登入/註冊</div>
+            <div class="BTN" onclick="booking()">預定行程</div>
+            <div class="BTN" id="singnboxBTN" onclick="showsignbox() ">登入/註冊</div>
         </div>
     </div>
 </header>
 
 <body>
-    <div id="signBackground" onclick="closesignbox()"></div>
+    <div class="BTN" id="signBackground" onclick="closesignbox()"></div>
     <div id="signBox">
         <!-- 預設燈入為初始畫面 點擊後變更為註冊畫面 -->
         <!--    div display切換 or JS生成 -->
         <div class="head"></div>
-        <img src="/img/icon/close.png" alt="" onclick="closesignbox()">
+        <img src="/img/icon/close.png" alt="" class="BTN" onclick="closesignbox()">
         <div id="signinInfobox" class="signinInfobox">
             <form id="A_signin" action="/A_signin" method="POST">
                 <div class="title">登入會員帳號</div>
                 <input type="text" name="signinEmail" placeholder="請輸入電子郵件" required>
                 <input type="password" name="signinPassword" placeholder="請輸入密碼" required>
-                <div class="button" onclick="signin()">
+                <div class="button BTN" onclick="signin()">
                     <p>登入帳戶</p>
                 </div>
                 <div id="signinMessage"></div>
-                <div class="content">還沒有註冊嗎?點此<p onclick="showsignUpInfo()">註冊</p>
+                <div class="content BTN">還沒有註冊嗎?點此<p class="BTN" onclick="showsignUpInfo()">註冊</p>
                 </div>
             </form>
         </div>
@@ -50,13 +51,13 @@
                 <input type="text" name="signupUsername" placeholder="請輸入姓名" required>
                 <input type="text" name="signupEnail" placeholder="請輸入電子郵件" required>
                 <input type="text" name="signupPassword" placeholder="請輸入密碼" required>
-                <div class="button" onclick="signup()">
+                <div class="button BTN" onclick="signup()">
                     <p>
                         註冊新帳戶
                     </p>
                 </div>
                 <div id="signupMessage"></div>
-                <div class="content">已經有帳號了嗎?點此<p onclick="showsignInInfo()">登入</p>
+                <div class="content BTN">已經有帳號了嗎?點此<p class="BTN" onclick="showsignInInfo()">登入</p>
                 </div>
             </form>
         </div>
@@ -89,17 +90,18 @@
                     <form action="" id="bookingForm">
                         <div class="datebox">
                             <div class="title">選擇日期：</div>
-                            <input type="date">
+                            <input type="date" name="date">
                         </div>
                         <div class="timebox">
                             <div class="title">選擇時間：</div>
                             <div class="noonbox">
                                 <div class="noon">
-                                    <input type="radio" name="time" value="noon" onclick="noonselect()">
+                                    <input type="radio" name="time" id="noon" class="BTN" onclick="noonselect()">
                                     <div>上半天</div>
                                 </div>
                                 <div class="afternoon">
-                                    <input type="radio" name="time" value="afternoon" onclick="afternoonselect()">
+                                    <input type="radio" name="time" id="afternoon" class="BTN"
+                                        onclick="afternoonselect()">
                                     <div>下半天</div>
                                 </div>
                             </div>
@@ -108,7 +110,7 @@
                             <div class="title">導覽費用：</div>
                             <div id="pay" class="pay"></div>
                         </div>
-                        <button>開始預訂行程</button>
+                        <div id="bookingBTM" class="BTN" onclick="booking_submit()">開始預訂行程</div>
                     </form>
                 </div>
             </div>

@@ -1,3 +1,4 @@
+from re import split
 from flask import *
 from datetime import timedelta
 import mysql.connector
@@ -27,7 +28,7 @@ def APIattraction(id):
         password="nhAG*nn8Yu7V",
         database="my_db"
     )
-    # nhAG*nn8Yu7V
+    # PW:nhAG*nn8Yu7V
     # 數據庫查詢
     mycursor = mydb.cursor()
     sql_page = "SELECT web_id,name,category,description,address,transport,mrt,latitude,longitude,imges FROM taipei_travel WHERE web_id = {id}".format(
@@ -145,7 +146,7 @@ def API():
     signstatus_message = request.args.get("signstatus", "")
     signstatus_message.encode('utf-8')
     mycursor = mydb.cursor()
-    if(signstatus_message != ""):
+    if(signstatus_message == "check"):
         check_username = session.get('username')
         if(check_username == None):
             user_info = {
@@ -157,6 +158,12 @@ def API():
                 username_db=check_username)
             mycursor.execute(sql_json)
             myresult = mycursor.fetchall()
+            if myresult == []:
+                user_info = {
+                    "data": "null"
+                }
+                return jsonify(user_info)
+
             userDataBox = []
             for i in myresult[0]:
                 userDataBox.append(i)
@@ -168,6 +175,7 @@ def API():
                 }
             }
             return jsonify(user_info)
+
     # signup_name = content["name"]
     signup_email = content["email"]
     signup_password = content["password"]
@@ -207,30 +215,88 @@ def API():
             return jsonify(signInfo)
 
 
+@app.route("/api/booking", methods=["POST", "GET"])
+def A_booking():
+    mydb = mysql.connector.Connect(
+        host="localhost",
+        user="my_user",
+        password="nhAG*nn8Yu7V",
+        database="my_db",
+        charset="utf8"
+    )
+    mycursor = mydb.cursor()
+    booking_message = request.args.get("bookingstatus", "")
+    content = request.json
+    if(booking_message == "check"):
+        check_username = session.get("username")
+        booking_user = "SELECT * FROM user WHERE user_email = '{username}'".format(
+            username=check_username)
+        mycursor.execute(booking_user)
+        myresult = mycursor.fetchall()
+        print(myresult)
+        if (myresult == []):
+            return jsonify({"data": "null"})
+        else:
+            booking_user = "SELECT * FROM user_booking WHERE user = '{username}'".format(
+                username=myresult[0][1])
+            mycursor.execute(booking_user)
+            myresult = mycursor.fetchall()
+            print(myresult)
+            if(myresult == []):
+                return jsonify({"data": "null"})
+            booking_Infodata = []
+            for item in myresult:
+                dic = {
+                    "booking_id": item[0],
+                    "attraction": {
+                        "id": item[2],
+                        "name": item[3],
+                        "imgsrc": item[4],
+                        "location": item[5]
+                    },
+                    "date": item[6],
+                    "time": item[8]
+                }
+                booking_Infodata.append(dic)
+            print("已成功回送")
+            return jsonify({"data": booking_Infodata})
+    if(content != None):
+        if(content["action"] == "insert"):
+            booking_insert = "INSERT INTO user_booking (user,attraction_id,attraction,location,imgsrc,date,time,booking_time) VALUES(%s, %s, %s, %s, %s, %s, %s,now())"
+            val = (content["username"], content["booking_attraction_id"], content["booking_attraction"], content["booking_location"], content["booking_imgsrc"],
+                   content["booking_date"], content["booking_time"])
+            mycursor.execute(booking_insert, val)
+            mydb.commit()
+            print("成功輸入")
+            return jsonify({"ok": True, "message": "成功輸入"})
+        else:
+            return jsonify({"error": True, "message": "無資料進來"})
+    else:
+        signInfo = {"ok": True}
+        return jsonify(signInfo)
+
+
+@app.route("/api/booking/<booking_id>", methods=["DELETE"])
+def booking_delete(booking_id):
+    mydb = mysql.connector.Connect(
+        host="localhost",
+        user="my_user",
+        password="nhAG*nn8Yu7V",
+        database="my_db",
+        charset="utf8"
+    )
+    mycursor = mydb.cursor()
+    booking_search = "DELETE from user_booking WHERE id = '{id_db}'".format(
+        id_db=booking_id)
+    mycursor.execute(booking_search)
+    mydb.commit()
+    return jsonify({"ok": True, "message": "成功刪除"})
+
+
 @app.route("/attraction/<id>")
 def attraction(id):
     print(id)
     return render_template("attraction.html")
-
-
-# @app.route("/A_signup", methods=["POST", "GET"])
-# def A_signup():
-#     mydb = mysql.connector.Connect(
-#         host="localhost",
-#         user="my_user",
-#         password="nhAG*nn8Yu7V",
-#         database="my_db",
-#         charset="utf8"
-#     )
-#     signup_name = request.form["signupUsername"]
-#     signup_account = request.form["signupEnail"]
-#     signup_password = request.form["signupPassword"]
-#     mycursor = mydb.cursor()
-#     signup_sql = "INSERT INTO user (user_name,user_email,user_password,signup_time) VALUES(%s, %s, %s,now())"
-#     val = (signup_name, signup_account, signup_password)
-#     mycursor.execute(signup_sql, val)
-#     mydb.commit()
-#     return redirect("/")
 
 
 @app.route("/A_signin", methods=["POST", "GET"])
@@ -271,6 +337,9 @@ def A_signout():
 
 @app.route("/booking")
 def booking():
+    check_username = session.get("username")
+    if(check_username == None):
+        return redirect("/")
     return render_template("booking.html")
 
 

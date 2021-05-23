@@ -22,31 +22,31 @@
 
 <header class="titleAndindex">
     <div class="headerIndexbox">
-        <div>台北一日遊</div>
+        <div class="BTN" onclick="gohomepage()">台北一日遊</div>
         <div class="box">
-            <div>預定行程</div>
-            <div id="singnboxBTN" onclick="showsignbox() ">登入/註冊</div>
+            <div class="BTN" onclick="booking()">預定行程</div>
+            <div class="BTN" id="singnboxBTN" onclick="showsignbox() ">登入/註冊</div>
         </div>
     </div>
 </header>
 
 <body>
-    <div id="signBackground" onclick="closesignbox()"></div>
+    <div class="BTN" id="signBackground" onclick="closesignbox()"></div>
     <div id="signBox">
         <!-- 預設燈入為初始畫面 點擊後變更為註冊畫面 -->
         <!--    div display切換 or JS生成 -->
         <div class="head"></div>
-        <img src="/img/icon/close.png" alt="" onclick="closesignbox()">
+        <img class="BTN" src="/img/icon/close.png" alt="" onclick="closesignbox()">
         <div id="signinInfobox" class="signinInfobox">
             <form id="A_signin" action="/A_signin" method="POST">
                 <div class="title">登入會員帳號</div>
                 <input type="text" name="signinEmail" placeholder="請輸入電子郵件" required>
                 <input type="password" name="signinPassword" placeholder="請輸入密碼" required>
-                <div class="button" onclick="signin()">
+                <div class="button BTN" onclick="signin()">
                     <p>登入帳戶</p>
                 </div>
                 <div id="signinMessage"></div>
-                <div class="content">還沒有註冊嗎?點此<p onclick="showsignUpInfo()">註冊</p>
+                <div class="content">還沒有註冊嗎?點此<p class="BTN" onclick="showsignUpInfo()">註冊</p>
                 </div>
             </form>
         </div>
@@ -56,13 +56,13 @@
                 <input type="text" name="signupUsername" placeholder="請輸入姓名" required>
                 <input type="text" name="signupEnail" placeholder="請輸入電子郵件" required>
                 <input type="text" name="signupPassword" placeholder="請輸入密碼" required>
-                <div class="button" onclick="signup()">
+                <div class="button BTN" onclick="signup()">
                     <p>
                         註冊新帳戶
                     </p>
                 </div>
                 <div id="signupMessage"></div>
-                <div class="content">已經有帳號了嗎?點此<p onclick="showsignInInfo()">登入</p>
+                <div class="content">已經有帳號了嗎?點此<p class="BTN" onclick="showsignInInfo()">登入</p>
                 </div>
             </form>
         </div>
@@ -78,7 +78,7 @@
                 <div class="searchbox">
                     <form name="searchForm" id="searchForm">
                         <input class="input" type="text" name="keyword" id="keyword" placeholder="輸入景點名稱查詢">
-                        <button class="btnicon" type="submit" value="" onclick="formDatabox();">
+                        <button class="btnicon BTN" type="submit" value="" onclick="formDatabox();">
                             <i class="fas fa-search" style="color: white;width: 30px;height: 30px;"></i>
                         </button>
                 </div>

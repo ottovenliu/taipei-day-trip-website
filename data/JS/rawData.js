@@ -17,8 +17,7 @@ if (searchKeyword[1] == undefined) {
 var SKword = "/api/attractions?keyword=" + searchKWord
 var req = new XMLHttpRequest();
 req.open("get", SKword, false)
-req.onload = function rawData() {
-};
+req.onload = function rawData() { };
 req.send(null);
 var contextArea = JSON.parse(req.responseText);
 var items = [];

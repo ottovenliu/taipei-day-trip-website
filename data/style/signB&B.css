@@ -120,3 +120,6 @@
     margin-bottom: 15px;
     align-items: center;
 }
+#signinMessage{
+    font-weight: 700;
+}

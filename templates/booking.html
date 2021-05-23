@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/style/Top.css" type="text/css">
+    <link rel="stylesheet" href="/style/Main_booking.css" type="text/css">
+
+    <link rel="stylesheet" href="/style/Footer.css" type="text/css">
+</head>
+<header class="titleAndindex">
+    <div class="headerIndexbox">
+        <div class="BTN" onclick="gohomepage()">台北一日遊</div>
+        <div class="box">
+            <div class="BTN" onclick="booking()">預定行程</div>
+            <div id="singnboxBTN" class="BTN" onclick="signout()">登出</div>
+        </div>
+    </div>
+</header>
+
+<body>
+    <div id="Main">
+        <div id="Welconecontent">
+            您好，<p id="username">使用者</p>，待預定的行程如下：
+        </div>
+        <div id="nobookingContent">
+            目前沒有任何預約的行程
+        </div>
+        <div id="bookingContent">
+            <div id="bookingattractionBox">
+                <div class="attractionBox">
+                    <div class="imgbox">
+                    </div>
+                    <div class="InfoBox">
+                        <div class="InfocontentBox InfotitleBox">
+                            台北一日遊：
+                            <div id="attractionContent">attraction</div>
+                        </div>
+                        <div class="InfocontentBox">
+                            日期：
+                            <div id="dateContent">dateContent</div>
+                        </div>
+                        <div class="InfocontentBox">
+                            時間：
+                            <div id="timeContent">timeContent</div>
+                        </div>
+                        <div class="InfocontentBox">
+                            費用：
+                            <div id="payContent">payContent</div>
+                        </div>
+                        <div class="InfocontentBox">
+                            地點：
+                            <div id="locationContent">locationContent</div>
+                        </div>
+                    </div>
+                    <div class="Delete_icon"> <img src="/img/icon/trash.png" alt=""></div>
+                </div>
+            </div>
+            <div class="bladeline"></div>
+            <div class="connectInfo">
+                <div class="title">
+                    您的聯絡資訊
+                </div>
+                <form action="" id="connectInfoForm" method="POST">
+                    <div class="nameBox">
+                        <div class="content">
+                            聯絡姓名：
+                        </div>
+                        <input type="text" placeholder="請輸入聯絡人姓名" required>
+                    </div>
+                    <div class="emailBox">
+                        <div class="content">
+                            聯絡信箱：
+                        </div>
+                        <input type="text" placeholder="請輸入聯絡人信箱" required>
+                    </div>
+                    <div class="phoneBox">
+                        <div class="content">
+                            手機號碼：
+                        </div>
+                        <input type="text" placeholder="請輸入聯絡人手機信箱" required>
+                    </div>
+                </form>
+                <div class="tip">請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。</div>
+            </div>
+            <div class="bladeline"></div>
+            <div class="payInfo">
+                <div class="title">
+                    信用卡付款資訊
+                </div>
+                <form action="" id="payInfoForm" method="POST">
+                    <div class="cardBox">
+                        <div class="content">
+                            卡片號碼：
+                        </div>
+                        <input type="password" placeholder="請輸入卡片號碼" required>
+                    </div>
+                    <div class="limitBox">
+                        <div class="content">
+                            卡片期限：
+                        </div>
+                        <input type="text" placeholder="月月/年年" required>
+                    </div>
+                    <div class="codeBox">
+                        <div class="content">
+                            驗證密碼：
+                        </div>
+                        <input type="password" placeholder="請輸入三碼安全碼" required>
+                    </div>
+                </form>
+            </div>
+            <div class="bladeline"></div>
+            <div class="handingBox">
+                <div class="handInfo">
+                    <div class="content">總價：新台幣<p id="totalaccount"></p>元</div>
+                    <button class="BTN">確認訂購並付款</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<footer>
+    <p>COPYRIGHT © 2021 台北一日遊</p>
+</footer>
+<script type="text/javascript" src="/JS/sign.js"></script>
+<script type="text/javascript" src="/JS/click.js"></script>
+<script type="text/javascript" src="/JS/rawData_booking.js"></script>
+
+</html>

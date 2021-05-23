@@ -1,0 +1,189 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+body{
+    position: relative;
+    top: 50px;
+}
+#Main{
+    position: relative;
+    width: 1200px;
+    max-width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    background-color: white;
+    flex-direction: column;
+}
+#Welconecontent{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    font-size: 19px;
+    font-weight: 700;
+    margin-top: 40px;
+}
+#nobookingContent{
+    font-size: 16px;
+    font-weight: 400;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+#bookingContent>.connectInfo>.title{
+    margin-bottom: 15px;
+    font-size: 20px;
+    font-weight: 700;
+}
+.nameBox,.emailBox,.phoneBox{
+    height: 40px;
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    margin-bottom: 15px;
+}
+.nameBox>input,.emailBox>input,.phoneBox>input{
+    height: 30px;
+    font-size: 16px;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    padding-left: 5px;
+}
+#bookingContent>.connectInfo>.tip{
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 45px;
+}
+#bookingContent>.bladeline{
+    border: 1px solid #E8E8E8;
+    width: 1200px;
+    max-width: 100%;
+    background-color: #E8E8E8;
+    margin-top: 30px;
+    margin-bottom: 30px ;
+}
+#bookingContent>.payInfo>.title{
+    margin-bottom: 15px;
+    font-size: 20px;
+    font-weight: 700;
+}
+.cardBox,.limitBox,.codeBox{
+    height: 40px;
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    margin-bottom: 15px;
+}
+.cardBox>input,.limitBox>input,.codeBox>input{
+    height: 30px;
+    font-size: 16px;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    padding-left: 5px;
+}
+#bookingContent>.handingBox{
+    height: 180px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+#bookingContent>.handingBox>.handInfo{
+    height: 75px;
+    margin-right: 10px;
+    margin-bottom: 70px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+#bookingContent>.handingBox>.handInfo>.content{
+    display: flex;
+    font-size: 16px;
+    justify-content: flex-end;
+}
+#bookingContent>.handingBox >.handInfo>button{
+    background-color: #448899;
+    color: white;
+    width: 180px;
+    height: 40px;
+    border-radius: 5px;
+    border: 1px gray;
+    font-size: 19px;
+}
+
+/* JS自動生成 */
+.attractionBox{
+    display: flex;
+    position: relative;
+    width: 100%;
+}
+.imgbox{
+    width:300px;
+    height: 200px;
+    margin-right: 20px;
+}
+.attractionBox>.InfoBox{
+    display: flex;
+    flex-direction: column;
+    height: 200px;
+    justify-content: space-evenly;
+}
+.attractionBox>.InfoBox>.InfocontentBox{
+    display: flex;
+    font-size: 16px;
+    font-weight: 700;
+    align-items: center
+}
+.attractionBox>.InfoBox>.InfocontentBox>div{
+    font-size: 16px;
+    font-weight: 400;
+}
+.attractionBox>.InfoBox>.InfotitleBox{
+    display: flex;
+    font-size: 16px;
+    font-weight: 700;
+    color: #448899;
+    align-items: center
+}
+.attractionBox>.InfoBox>.InfotitleBox>div{
+    font-size: 16px;
+    font-weight: 700;
+    color: #448899;
+}
+.Delete_icon{
+    /* bottom: -5%; */
+    height: 30px;
+    width: 30px;
+    position: absolute;
+    right: 10px;
+    top: 10%;
+    cursor: pointer;
+}
+.Delete_icon>img{
+    height: 100%;
+    cursor: pointer;
+
+}
+@media (max-width:600px) {
+    .attractionBox{
+        display: flex;
+        position: relative;
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .Delete_icon{
+        bottom: -5%;
+        height: 30px;
+        width: 30px;
+        position: absolute;
+        right: 10px;
+        top: auto;
+        cursor: pointer;
+    }
+}
+
