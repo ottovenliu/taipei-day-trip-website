@@ -25,9 +25,10 @@ def APIattraction(id):
     mydb = mysql.connector.Connect(
         host="localhost",
         user="my_user",
-        password="nhAG*nn8Yu7V",
+        password="123456789",
         database="my_db"
     )
+    # PW
     # PW:nhAG*nn8Yu7V
     # 數據庫查詢
     mycursor = mydb.cursor()
@@ -63,7 +64,7 @@ def APIattractions():
     mydb = mysql.connector.Connect(
         host="localhost",
         user="my_user",
-        password="nhAG*nn8Yu7V",
+        password="123456789",
         database="my_db"
     )
     # 參數整理
@@ -137,7 +138,7 @@ def API():
     mydb = mysql.connector.Connect(
         host="localhost",
         user="my_user",
-        password="nhAG*nn8Yu7V",
+        password="123456789",
         database="my_db",
         charset="utf8"
     )
@@ -220,7 +221,7 @@ def A_booking():
     mydb = mysql.connector.Connect(
         host="localhost",
         user="my_user",
-        password="nhAG*nn8Yu7V",
+        password="123456789",
         database="my_db",
         charset="utf8"
     )
@@ -281,7 +282,7 @@ def booking_delete(booking_id):
     mydb = mysql.connector.Connect(
         host="localhost",
         user="my_user",
-        password="nhAG*nn8Yu7V",
+        password="123456789",
         database="my_db",
         charset="utf8"
     )
@@ -304,7 +305,7 @@ def A_signin():
     mydb = mysql.connector.Connect(
         host="localhost",
         user="my_user",
-        password="nhAG*nn8Yu7V",
+        password="123456789",
         database="my_db",
         charset="utf8"
     )
@@ -343,6 +344,39 @@ def booking():
     return render_template("booking.html")
 
 
+@app.route("/test")
+def test():
+    return render_template("testwithoutoffice.html")
+
+
+@app.route("/api/test", methods=["GET", "POST"])
+def A_test():
+    if request.method == "POST":
+        orderData = request.json
+        if orderData == []:
+            {"Message": "getRequest", "data": "null"}
+        print(orderData)
+        print("------------------------split------------------------")
+        print(orderData["data"]["contact"]["name"])
+        return jsonify({"Message": "getRequest", "data": orderData})
+    # orderData = request
+    # print(orderData)
+    print("------------------------split------------------------")
+    # Message_name = orderData["contact"]["name"]
+    # Message_phone = orderData["contact"]["phone"]
+    # Message_email = orderData["contact"]["email"]
+
+    print("------------------------split------------------------")
+    # print()
+    return jsonify(
+        {
+            "data": {
+
+            }
+        }
+    )
+
+
 @app.route("/thankyou")
 def thankyou():
     return render_template("thankyou.html")
@@ -364,5 +398,5 @@ def err_handler(e):
     })
 
 
-# app.run(port=3000, debug=True)
-app.run(host="0.0.0.0", port=3000, debug=True)
+app.run(port=3000, debug=True)
+# app.run(host="0.0.0.0", port=3000, debug=True)
