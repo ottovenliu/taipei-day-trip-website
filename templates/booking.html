@@ -6,9 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="/style/Top.css" type="text/css">
     <link rel="stylesheet" href="/style/Main_booking.css" type="text/css">
-
     <link rel="stylesheet" href="/style/Footer.css" type="text/css">
 </head>
 <header class="titleAndindex">
@@ -60,64 +61,46 @@
                 </div>
             </div>
             <div class="bladeline"></div>
-            <div class="connectInfo">
-                <div class="title">
-                    您的聯絡資訊
-                </div>
-                <form action="" id="connectInfoForm" method="POST">
-                    <div class="nameBox">
-                        <div class="content">
-                            聯絡姓名：
-                        </div>
-                        <input type="text" placeholder="請輸入聯絡人姓名" required>
+            <div class="container">
+                <form>
+                    <div class="title">您的聯絡資訊</div>
+                    <div class="form-group">
+                        <label for="name">聯絡姓名：</label>
+                        <input type="text" class="form-control" naem="booking_name" id="booking_name" placeholder="姓名"
+                            　required>
                     </div>
-                    <div class="emailBox">
-                        <div class="content">
-                            聯絡信箱：
-                        </div>
-                        <input type="text" placeholder="請輸入聯絡人信箱" required>
+                    <div class="form-group">
+                        <label for="phone_number">連絡電話：</label>
+                        <input type="text" class="form-control" name="booking_phone" id="booking_phone"
+                            placeholder="電話:09xx-xxx-xxx" required>
                     </div>
-                    <div class="phoneBox">
-                        <div class="content">
-                            手機號碼：
-                        </div>
-                        <input type="text" placeholder="請輸入聯絡人手機信箱" required>
+                    <div class="form-group">
+                        <label for="Email1">聯絡信箱：</label>
+                        <input type="email" class="form-control" name="booking_email" id="booking_email"
+                            placeholder="電子信箱" required>
                     </div>
-                </form>
-                <div class="tip">請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。</div>
-            </div>
-            <div class="bladeline"></div>
-            <div class="payInfo">
-                <div class="title">
-                    信用卡付款資訊
-                </div>
-                <form action="" id="payInfoForm" method="POST">
-                    <div class="cardBox">
-                        <div class="content">
-                            卡片號碼：
-                        </div>
-                        <input type="password" placeholder="請輸入卡片號碼" required>
+                    <div class="tip">請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。</div>
+                    <div class="bladeline"></div>
+                    <div class="form-group card-number-group">
+                        <label for="card-number" class="control-label"><span id="cardtype"></span>卡號</label>
+                        <div class="form-control card-number"></div>
                     </div>
-                    <div class="limitBox">
-                        <div class="content">
-                            卡片期限：
-                        </div>
-                        <input type="text" placeholder="月月/年年" required>
+                    <div class="form-group expiration-date-group">
+                        <label for="expiration-date" class="control-label">卡片到期日</label>
+                        <div class="form-control expiration-date" id="tappay-expiration-date"></div>
                     </div>
-                    <div class="codeBox">
-                        <div class="content">
-                            驗證密碼：
+                    <div class="form-group cvc-group">
+                        <label for="cvc" class="control-label">卡片後三碼</label>
+                        <div class="form-control cvc"></div>
+                    </div>
+                    <div class="bladeline"></div>
+                    <div class="handingBox">
+                        <div class="handInfo">
+                            <div class="content">總價：新台幣<p id="totalaccount"> 2,500 </p>元</div>
+                            <button type="submit" class="btn btn-default">Pay</button>
                         </div>
-                        <input type="password" placeholder="請輸入三碼安全碼" required>
                     </div>
                 </form>
-            </div>
-            <div class="bladeline"></div>
-            <div class="handingBox">
-                <div class="handInfo">
-                    <div class="content">總價：新台幣<p id="totalaccount"></p>元</div>
-                    <button class="BTN">確認訂購並付款</button>
-                </div>
             </div>
         </div>
     </div>
@@ -128,5 +111,194 @@
 <script type="text/javascript" src="/JS/sign.js"></script>
 <script type="text/javascript" src="/JS/click.js"></script>
 <script type="text/javascript" src="/JS/rawData_booking.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"
+    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<script src="https://js.tappaysdk.com/tpdirect/v5.7.0"></script>
+<script>
+    TPDirect.setupSDK(20449, 'app_DCdLLzzDUytOFNJm27wCRNIlYiz0x1ljpyyRxObVDNR5GqqOzVaVDlkoaKde', 'sandbox')
+    TPDirect.card.setup({
+        fields: {
+            number: {
+                element: '.form-control.card-number',
+                placeholder: '**** **** **** ****'
+            },
+            expirationDate: {
+                element: document.getElementById('tappay-expiration-date'),
+                placeholder: 'MM / YY'
+            },
+            ccv: {
+                element: $('.form-control.cvc')[0],
+                placeholder: '後三碼'
+            }
+        },
+        styles: {
+            'input': {
+                'color': 'gray'
+            },
+            'input.ccv': {
+                // 'font-size': '16px'
+            },
+            ':focus': {
+                'color': 'black'
+            },
+            '.valid': {
+                'color': 'green'
+            },
+            '.invalid': {
+                'color': 'red'
+            },
+            '@media screen and (max-width: 400px)': {
+                'input': {
+                    'color': 'orange'
+                }
+            }
+        }
+    })
+    // listen for TapPay Field
+    TPDirect.card.onUpdate(function (update) {
+        /* Disable / enable submit button depend on update.canGetPrime  */
+        /* ============================================================ */
+        if (update.canGetPrime) {
+            $('button[type="submit"]').removeAttr('disabled')
+        } else {
+            $('button[type="submit"]').attr('disabled', true)
+        }
+        var newType = update.cardType === 'unknown' ? '' : update.cardType
+        $('#cardtype').text(newType)
+
+
+
+        /* Change form-group style when tappay field status change */
+        /* ======================================================= */
+
+        // number 欄位是錯誤的
+        if (update.status.number === 2) {
+            setNumberFormGroupToError('.card-number-group')
+        } else if (update.status.number === 0) {
+            setNumberFormGroupToSuccess('.card-number-group')
+        } else {
+            setNumberFormGroupToNormal('.card-number-group')
+        }
+
+        if (update.status.expiry === 2) {
+            setNumberFormGroupToError('.expiration-date-group')
+        } else if (update.status.expiry === 0) {
+            setNumberFormGroupToSuccess('.expiration-date-group')
+        } else {
+            setNumberFormGroupToNormal('.expiration-date-group')
+        }
+
+        if (update.status.cvc === 2) {
+            setNumberFormGroupToError('.cvc-group')
+        } else if (update.status.cvc === 0) {
+            setNumberFormGroupToSuccess('.cvc-group')
+        } else {
+            setNumberFormGroupToNormal('.cvc-group')
+        }
+    })
+
+    $('form').on('submit', function (event) {
+        event.preventDefault()
+        // fix keyboard issue in iOS device
+        forceBlurIos()
+
+        const tappayStatus = TPDirect.card.getTappayFieldsStatus()
+        console.log(tappayStatus)
+
+        // Check TPDirect.card.getTappayFieldsStatus().canGetPrime before TPDirect.card.getPrime
+        if (tappayStatus.canGetPrime === false) {
+            alert('can not get prime')
+            return
+        }
+        // Get prime
+        TPDirect.card.getPrime(function (result) {
+            if (result.status !== 0) {
+                alert('get prime error ' + result.msg)
+                return
+            }
+            alert('get prime 成功，prime: ' + result.card.prime)
+
+            let Booking_data = {
+                "data": {
+                    "prime": result.card.prime,
+                    "order": {
+                        "price": document.querySelector("#totalaccount").innerText,
+                        "trip": {
+                            "attraaction": {
+                                "id": document.querySelector("#bookingattractionBox > div > div.Delete_icon").id,
+                                "name": document.querySelector("#attractionContent").innerHTML,
+                                "address": document.querySelector("#locationContent").innerHTML,
+                                "image": document.querySelector("#bookingattractionBox > div > div.imgbox").style.backgroundImage.split(`"`)[1]
+                            },
+                            "date": document.querySelector("#dateContent").innerText,
+                            "time": "null"
+                        },
+                    },
+                    "contact": {
+                        "name": document.querySelector("#booking_name").value,
+                        "email": document.querySelector("#booking_email").value,
+                        "phone": document.querySelector("#booking_phone").value
+                    }
+                }
+            }
+            if (document.querySelector("#timeContent").innerText === "下午 2 點到晚上 9 點") {
+                Booking_data["data"]["order"]["trip"]["time"] = "afternoon"
+            } else {
+                Booking_data["data"]["order"]["trip"]["time"] = "noon"
+            }
+            let BookingData_Json = JSON.stringify(Booking_data)
+            console.log(Booking_data)
+            console.log(JSON.stringify(Booking_data))
+            $.ajax({
+                url: "/api/order",
+                type: "POST",
+                data: JSON.stringify(Booking_data),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    console.log(response["data"]["number"])
+                    location.href = "/thankyou?number=" + response["data"]["number"]
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+
+
+            })
+            return
+        })
+    })
+
+    function setNumberFormGroupToError(selector) {
+        $(selector).addClass('has-error')
+        $(selector).removeClass('has-success')
+    }
+
+    function setNumberFormGroupToSuccess(selector) {
+        $(selector).removeClass('has-error')
+        $(selector).addClass('has-success')
+    }
+
+    function setNumberFormGroupToNormal(selector) {
+        $(selector).removeClass('has-error')
+        $(selector).removeClass('has-success')
+    }
+
+    function forceBlurIos() {
+        if (!isIos()) {
+            return
+        }
+        var input = document.createElement('input')
+        input.setAttribute('type', 'text')
+        // Insert to active element to ensure scroll lands somewhere relevant
+        document.activeElement.prepend(input)
+        input.focus()
+        input.parentNode.removeChild(input)
+    }
+
+    function isIos() {
+        return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    }
+</script>
 
 </html>

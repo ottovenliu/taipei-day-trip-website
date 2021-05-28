@@ -33,32 +33,7 @@ body{
     margin-top: 40px;
     margin-bottom: 40px;
 }
-#bookingContent>.connectInfo>.title{
-    margin-bottom: 15px;
-    font-size: 20px;
-    font-weight: 700;
-}
-.nameBox,.emailBox,.phoneBox{
-    height: 40px;
-    display: flex;
-    align-items: center;
-    flex-wrap: nowrap;
-    flex-direction: row;
-    margin-bottom: 15px;
-}
-.nameBox>input,.emailBox>input,.phoneBox>input{
-    height: 30px;
-    font-size: 16px;
-    border: 1px solid lightgray;
-    border-radius: 5px;
-    padding-left: 5px;
-}
-#bookingContent>.connectInfo>.tip{
-    font-size: 16px;
-    font-weight: 700;
-    margin-bottom: 45px;
-}
-#bookingContent>.bladeline{
+.bladeline{
     border: 1px solid #E8E8E8;
     width: 1200px;
     max-width: 100%;
@@ -66,54 +41,8 @@ body{
     margin-top: 30px;
     margin-bottom: 30px ;
 }
-#bookingContent>.payInfo>.title{
-    margin-bottom: 15px;
-    font-size: 20px;
-    font-weight: 700;
-}
-.cardBox,.limitBox,.codeBox{
-    height: 40px;
-    display: flex;
-    align-items: center;
-    flex-wrap: nowrap;
-    flex-direction: row;
-    margin-bottom: 15px;
-}
-.cardBox>input,.limitBox>input,.codeBox>input{
-    height: 30px;
-    font-size: 16px;
-    border: 1px solid lightgray;
-    border-radius: 5px;
-    padding-left: 5px;
-}
-#bookingContent>.handingBox{
-    height: 180px;
-    display: flex;
-    align-items: flex-end;
-    justify-content: flex-end;
-}
-#bookingContent>.handingBox>.handInfo{
-    height: 75px;
-    margin-right: 10px;
-    margin-bottom: 70px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-#bookingContent>.handingBox>.handInfo>.content{
-    display: flex;
-    font-size: 16px;
-    justify-content: flex-end;
-}
-#bookingContent>.handingBox >.handInfo>button{
-    background-color: #448899;
-    color: white;
-    width: 180px;
-    height: 40px;
-    border-radius: 5px;
-    border: 1px gray;
-    font-size: 19px;
-}
+
+
 
 /* JS自動生成 */
 .attractionBox{
@@ -185,5 +114,92 @@ body{
         top: auto;
         cursor: pointer;
     }
+}
+
+/* 外接金流 */
+.container {
+    width: 100%;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+#bookingContent > div.container > form > div.title{
+    margin-bottom: 15px;
+    font-size: 20px;
+    font-weight: 700;
+}
+#bookingContent > div.container > form > div.tip{
+    font-size: 16px;
+    font-weight: 700;
+
+}
+
+/* form {
+    padding: 40px;
+    box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+} */
+#bookingContent > div.container > form > div.form-group{
+    width: 60%;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    flex-direction: row;
+}
+#bookingContent > div.container > form > div.form-group> label{
+    width: 100px;
+    padding: 0px;
+    margin-right: 5px;
+}
+#bookingContent > div.container > form > div.form-group > input{
+    width: 80%;
+}
+#bookingContent > div.container > form > div.handingBox > div{
+    height: 180px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    flex-direction: column;
+}
+#totalaccount{
+    margin-left: 5px;
+    margin-right: 5px;
+}
+#bookingContent > div.container > form > div.handingBox > div > div{
+    display: flex;
+    font-size: 16px;
+}
+#bookingContent > div.container > form > div.handingBox > div > button{
+    background-color: #448899;
+    color: white;
+    width: 180px;
+    height: 40px;
+    border-radius: 5px;
+    padding: 0px;
+    border: 1px gray;
+    font-size: 19px;
+    margin-bottom: 45px;
+}
+
+
+
+
+
+.tappay-field-focus {
+    border-color: #66afe9;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+}
+
+.has-error .tappay-field-focus {
+    border-color: #843534;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 6px #ce8483;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 6px #ce8483;
+}
+
+.has-success .tappay-field-focus {
+    border-color: #2b542c;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 6px #67b168;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 6px #67b168;
 }
 

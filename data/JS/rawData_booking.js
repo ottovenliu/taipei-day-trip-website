@@ -45,15 +45,17 @@ function getBookingData() {
                     document.querySelector("#bookingattractionBox > div > div.imgbox").style.backgroundPosition = "center"
                     document.querySelector("#attractionContent").innerHTML = items[items.length - 1][6]
                     document.querySelector("#dateContent").innerHTML = items[items.length - 1][1]
-                    document.querySelector("#timeContent").innerHTML = items[items.length - 1][2]
+                    // document.querySelector("#timeContent").innerHTML = items[items.length - 1][2]
                     let totalpayment
                     let payment
-                    if (items[items.length - 1][1] == "noon") {
+                    if (items[items.length - 1][2] == "noon") {
                         payment = "新台幣 2,000 元"
                         totalpayment = " 2,000 "
+                        document.querySelector("#timeContent").innerHTML = "早上 9 點到下午 4 點"
                     } else {
                         payment = "新台幣 2,500 元"
                         totalpayment = " 2,500 "
+                        document.querySelector("#timeContent").innerHTML = "下午 2 點到晚上 9 點"
                     }
                     document.querySelector("#payContent").innerHTML = payment
                     document.querySelector("#totalaccount").innerHTML = totalpayment
