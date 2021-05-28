@@ -25,7 +25,7 @@ def APIattraction(id):
     mydb = mysql.connector.Connect(
         host="localhost",
         user="my_user",
-        password="123456789",
+        password="nhAG*nn8Yu7V",
         database="my_db"
     )
     # PW
@@ -64,7 +64,7 @@ def APIattractions():
     mydb = mysql.connector.Connect(
         host="localhost",
         user="my_user",
-        password="123456789",
+        password="nhAG*nn8Yu7V",
         database="my_db"
     )
     # 參數整理
@@ -138,7 +138,7 @@ def API():
     mydb = mysql.connector.Connect(
         host="localhost",
         user="my_user",
-        password="123456789",
+        password="nhAG*nn8Yu7V",
         database="my_db",
         charset="utf8"
     )
@@ -221,7 +221,7 @@ def A_booking():
     mydb = mysql.connector.Connect(
         host="localhost",
         user="my_user",
-        password="123456789",
+        password="nhAG*nn8Yu7V",
         database="my_db",
         charset="utf8"
     )
@@ -285,7 +285,7 @@ def booking_delete(booking_id):
     mydb = mysql.connector.Connect(
         host="localhost",
         user="my_user",
-        password="123456789",
+        password="nhAG*nn8Yu7V",
         database="my_db",
         charset="utf8"
     )
@@ -308,7 +308,7 @@ def A_signin():
     mydb = mysql.connector.Connect(
         host="localhost",
         user="my_user",
-        password="123456789",
+        password="nhAG*nn8Yu7V",
         database="my_db",
         charset="utf8"
     )
@@ -362,7 +362,7 @@ def A_order():
         mydb = mysql.connector.Connect(
             host="localhost",
             user="my_user",
-            password="123456789",
+            password="nhAG*nn8Yu7V",
             database="my_db",
             charset="utf8"
         )
@@ -407,7 +407,7 @@ def A_order():
                 mydb = mysql.connector.Connect(
                     host="localhost",
                     user="my_user",
-                    password="123456789",
+                    password="nhAG*nn8Yu7V",
                     database="my_db",
                     charset="utf8"
                 )
@@ -454,7 +454,7 @@ def order_info(order_id):
     mydb = mysql.connector.Connect(
         host="localhost",
         user="my_user",
-        password="123456789",
+        password="nhAG*nn8Yu7V",
         database="my_db",
         charset="utf8"
     )
@@ -521,5 +521,5 @@ def err_handler(e):
     })
 
 
-app.run(port=3000, debug=True)
-# app.run(host="0.0.0.0", port=3000, debug=True)
+# app.run(port=3000, debug=True)
+app.run(host="0.0.0.0", port=3000, debug=True)
