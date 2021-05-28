@@ -1,10 +1,10 @@
 from re import split
 from flask import *
-from datetime import timedelta
+from datetime import timedelta, datetime
 import mysql.connector
 import os
 import json
-
+import requests
 app = Flask(__name__,
             static_url_path="/",
             static_folder="data")
@@ -234,7 +234,6 @@ def A_booking():
             username=check_username)
         mycursor.execute(booking_user)
         myresult = mycursor.fetchall()
-        print(myresult)
         if (myresult == []):
             return jsonify({"data": "null"})
         else:
@@ -245,30 +244,34 @@ def A_booking():
             print(myresult)
             if(myresult == []):
                 return jsonify({"data": "null"})
-            booking_Infodata = []
-            for item in myresult:
-                dic = {
-                    "booking_id": item[0],
-                    "attraction": {
-                        "id": item[2],
-                        "name": item[3],
-                        "imgsrc": item[4],
-                        "location": item[5]
-                    },
-                    "date": item[6],
-                    "time": item[8]
-                }
-                booking_Infodata.append(dic)
-            print("已成功回送")
-            return jsonify({"data": booking_Infodata})
+            if(myresult[len(myresult)-1][12] == '0'):
+                booking_Infodata = []
+                for item in myresult:
+                    dic = {
+                        "booking_id": item[0],
+                        "attraction": {
+                            "id": item[2],
+                            "name": item[3],
+                            "imgsrc": item[4],
+                            "location": item[5]
+                        },
+                        "date": item[6],
+                        "time": item[7]
+                    }
+                    booking_Infodata.append(dic)
+                print("已成功回送")
+                return jsonify({"data": booking_Infodata})
+            if(myresult[len(myresult)-1][12] == '1'):
+                return jsonify({"data": "null"})
     if(content != None):
         if(content["action"] == "insert"):
-            booking_insert = "INSERT INTO user_booking (user,attraction_id,attraction,location,imgsrc,date,time,booking_time) VALUES(%s, %s, %s, %s, %s, %s, %s,now())"
+            booking_insert = "INSERT INTO user_booking (user,attraction_id,attraction,location,imgsrc,date,time,booking_time,order_status) VALUES(%s, %s, %s, %s, %s, %s, %s,now(), %s)"
             val = (content["username"], content["booking_attraction_id"], content["booking_attraction"], content["booking_location"], content["booking_imgsrc"],
-                   content["booking_date"], content["booking_time"])
+                   content["booking_date"], content["booking_time"], content["order_status"])
             mycursor.execute(booking_insert, val)
             mydb.commit()
             print("成功輸入")
+            print("------------------------------SPOTLIGHT------------------------------")
             return jsonify({"ok": True, "message": "成功輸入"})
         else:
             return jsonify({"error": True, "message": "無資料進來"})
@@ -349,19 +352,88 @@ def test():
     return render_template("testwithoutoffice.html")
 
 
-@app.route("/api/test", methods=["GET", "POST"])
-def A_test():
+@app.route("/api/order", methods=["GET", "POST"])
+def A_order():
     if request.method == "POST":
         orderData = request.json
         if orderData == []:
-            {"Message": "getRequest", "data": "null"}
+            return jsonify({"Message": "getRequest", "data": "null"})
         print(orderData)
+        mydb = mysql.connector.Connect(
+            host="localhost",
+            user="my_user",
+            password="123456789",
+            database="my_db",
+            charset="utf8"
+        )
+        mycursor = mydb.cursor()
+        contact_update = "UPDATE user_booking SET contact_name='{contact_name}',contact_phone='{contact_phone}',contact_email='{contact_email}' WHERE id='{order_id}';".format(
+            order_id=orderData["data"]["order"]["trip"]["attraaction"]["id"], contact_name=orderData["data"]["contact"]["name"], contact_phone=orderData["data"]["contact"]["email"], contact_email=orderData["data"]["contact"]["phone"])
+        mycursor.execute(contact_update)
+        mydb.commit()
         print("------------------------split------------------------")
-        print(orderData["data"]["contact"]["name"])
-        return jsonify({"Message": "getRequest", "data": orderData})
-    # orderData = request
-    # print(orderData)
+        print(orderData["data"])
+        orderReqUrl = "https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime"
+        orderReqHeader = {
+            "content-type": "application/json",
+            "x-api-key": "partner_3f8vicM4EVQRVKBhgcD7ZHLVBLE8YMQSz8p3Mvto5WwaS9rB1LZKT1sb"
+        }
+        orderReqData = {
+            "prime": orderData["data"]["prime"],
+            "partner_key": "partner_3f8vicM4EVQRVKBhgcD7ZHLVBLE8YMQSz8p3Mvto5WwaS9rB1LZKT1sb",
+            "merchant_id": "PursuingStudio_CTBC",
+            "details": "TapPay Test",
+            "amount": 100,
+            "cardholder": {
+                "phone_number": "+886923456789",
+                "name": "王小明",
+                "email": "LittleMing@Wang.com",
+                "zip_code": "100",
+                "address": "台北市天龍區芝麻街1號1樓",
+                "national_id": "A123456789"
+            },
+            "remember": True
+        }
+        if(orderData["data"]["order"]["price"] == "2,000"):
+            orderReqData["amount"] = 2000
+        if(orderData["data"]["order"]["price"] == "2,500"):
+            orderReqData["amount"] = 2500
+        response = requests.post(
+            orderReqUrl, data=json.dumps(orderReqData), headers=orderReqHeader, json=None
+        )
+        OrderedDict = response.json()
+        if OrderedDict["status"] == 0:
+            if OrderedDict["msg"] == 'Success':
+                mydb = mysql.connector.Connect(
+                    host="localhost",
+                    user="my_user",
+                    password="123456789",
+                    database="my_db",
+                    charset="utf8"
+                )
+                mycursor = mydb.cursor()
+                order_update = "UPDATE user_booking SET order_status='1' WHERE id='{order_id}';".format(
+                    order_id=orderData["data"]["order"]["trip"]["attraaction"]["id"])
+                mycursor.execute(order_update)
+                mydb.commit()
+                print()
+                number = orderData["data"]["order"]["trip"]["date"].replace(
+                    "-", "")+str(orderData["data"]["order"]["trip"]["attraaction"]["id"])
+                return jsonify({
+                    "data": {
+                        "number": number,
+                        "payment": {
+                            "status": 0,
+                            "message": "付款成功"
+                        }
+                    }
+                })
+
     print("------------------------split------------------------")
+
+    return {
+        "data": "null"
+    }
     # Message_name = orderData["contact"]["name"]
     # Message_phone = orderData["contact"]["phone"]
     # Message_email = orderData["contact"]["email"]
@@ -377,12 +449,63 @@ def A_test():
     )
 
 
-@app.route("/thankyou")
+@app.route("/api/order/<order_id>")
+def order_info(order_id):
+    mydb = mysql.connector.Connect(
+        host="localhost",
+        user="my_user",
+        password="123456789",
+        database="my_db",
+        charset="utf8"
+    )
+    mycursor = mydb.cursor()
+    booking_search = "SELECT * from user_booking WHERE id = '{id_db}'".format(
+        id_db=order_id)
+    mycursor.execute(booking_search)
+    orderInfo = mycursor.fetchall()
+    if(orderInfo != []):
+        print(orderInfo)
+        datenumber = str(orderInfo[0][6].replace("-", ""))
+        number = datenumber+str(orderInfo[0][0])
+        price = True
+        if(orderInfo[0][-6] == "noon"):
+            price = 2000
+        if(orderInfo[0][-6] == "afternoon"):
+            price = 2500
+        orderApi = {
+            "data": {
+                "number": number,
+                "price": price,
+                "trip": {
+                    "attraction": {
+                        "id": orderInfo[0][2],
+                        "name": orderInfo[0][3],
+                        "address": orderInfo[0][4],
+                        "image": orderInfo[0][5]
+                    },
+                    "date": orderInfo[0][6],
+                    "time": orderInfo[0][7]
+                },
+                "contact": {
+                    "name": orderInfo[0][-4],
+                    "email": orderInfo[0][-2],
+                    "phone": orderInfo[0][-3]
+                },
+                "status": orderInfo[0][-1]
+            }
+        }
+        return jsonify(orderApi)
+    else:
+        return jsonify({"data": "null"})
+
+
+@ app.route("/thankyou")
 def thankyou():
+    orderStatus_message = request.args.get("number", "")
     return render_template("thankyou.html")
 
 
-@app.errorhandler(500)
+@ app.errorhandler(500)
 def err_handler(e):
     return jsonify({
         "error": "true",
@@ -390,7 +513,7 @@ def err_handler(e):
     })
 
 
-@app.errorhandler(400)
+@ app.errorhandler(400)
 def err_handler(e):
     return jsonify({
         "error": "true",

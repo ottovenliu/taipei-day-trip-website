@@ -217,33 +217,22 @@
                 return
             }
             alert('get prime 成功，prime: ' + result.card.prime)
-            // `Use following command to send to server \n\n
-            // curl -X POST https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime \\
-            // -H 'content-type: application/json' \\
-            // -H 'x-api-key: partner_6ID1DoDlaPrfHw6HBZsULfTYtDmWs0q0ZZGKMBpp4YICWBxgK97eK3RM' \\
-            // -d '{
-            //     "partner_key": "partner_6ID1DoDlaPrfHw6HBZsULfTYtDmWs0q0ZZGKMBpp4YICWBxgK97eK3RM",
-            //     "prime": "${result.card.prime}",
-            //     "amount": "1",
-            //     "merchant_id": "GlobalTesting_CTBC",
-            //     "details": "Some item",
-            //     "cardholder": {
-            //         "phone_number": "+886923456789",
-            //         "name": "王小明",
-            //         "email": "LittleMing@Wang.com",
-            //         "zip_code": "100",
-            //         "address": "台北市天龍區芝麻街1號1樓",
-            //         "national_id": "A123456789"
-            //     }
-            // }'`.replace(/                /g, '')
+
             let Booking_data = {
                 "data": {
                     "prime": result.card.prime,
                     "order": {
-                        "price": "Salary:2,000K",
-                        "trip": {},
-                        "date": [],
-                        "time": [],
+                        "price": document.querySelector("#totalaccount").innerText,
+                        "trip": {
+                            "attraaction": {
+                                "id": document.querySelector("#bookingattractionBox > div > div.Delete_icon").id,
+                                "name": document.querySelector("#attractionContent").innerHTML,
+                                "address": document.querySelector("#locationContent").innerHTML,
+                                "image": document.querySelector("#bookingattractionBox > div > div.imgbox").style.backgroundImage.split(`"`)[1]
+                            },
+                            "date": document.querySelector("#dateContent").innerText,
+                            "time": "null"
+                        },
                     },
                     "contact": {
                         "name": document.querySelector("#booking_name").value,
@@ -252,17 +241,23 @@
                     }
                 }
             }
+            if (document.querySelector("#timeContent").innerText === "下午 2 點到晚上 9 點") {
+                Booking_data["data"]["order"]["trip"]["time"] = "afternoon"
+            } else {
+                Booking_data["data"]["order"]["trip"]["time"] = "noon"
+            }
             let BookingData_Json = JSON.stringify(Booking_data)
             console.log(Booking_data)
             console.log(JSON.stringify(Booking_data))
             $.ajax({
-                url: "/api/test",
+                url: "/api/order",
                 type: "POST",
                 data: JSON.stringify(Booking_data),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (response) {
-                    console.log(response)
+                    console.log(response["data"]["number"])
+                    location.href = "/thankyou?number=" + response["data"]["number"]
                 },
                 error: function (error) {
                     console.log(error)

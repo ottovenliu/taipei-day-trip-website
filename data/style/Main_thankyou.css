@@ -1,0 +1,58 @@
+body{
+    position: relative;
+    top: 51px;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+body > div.contentSpace{
+    position: relative;
+    padding: 5px;
+    margin: 5px;
+    width: 100%;
+    max-width: 1200px;
+    height: 600px;
+    /* background-color: lightyellow; */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+#thankyouMessagebox{
+    width: 300px;
+    height: 200px;
+    background-color: lightblue;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border-radius: 5%;
+}
+#thankyouMessagebox>div{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+#usernamebox{
+    display: flex;
+    align-items: center;
+}
+#orderNumberbox{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+#messagebox{
+    display: flex;
+    flex-direction: column;
+    align-items: center
+}
+#messagebox > p{
+    font-weight: 900;
+}
+#thankyouMessagebox > div.goHome{
+    display: flex;
+}

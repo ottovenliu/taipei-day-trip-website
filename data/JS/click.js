@@ -77,7 +77,7 @@ function booking_submit() {
                     databox.booking_time = booking_time
                     databox.booking_imgsrc = document.querySelector("#imagesscroll > img:nth-child(1)").src
                     databox.booking_location = document.querySelector("#addresscontent").innerHTML
-                    console.log(databox)
+                    databox.order_status = "0"
                     databox.action = "insert"
                     let Req_account = new XMLHttpRequest();
                     let booking_url = "/api/booking";
