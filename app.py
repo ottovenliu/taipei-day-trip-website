@@ -276,7 +276,7 @@ def A_booking():
         else:
             return jsonify({"error": True, "message": "無資料進來"})
     else:
-        signInfo = {"ok": True}
+        signInfo = {"data": "null"}
         return jsonify(signInfo)
 
 
