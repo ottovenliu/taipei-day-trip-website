@@ -213,10 +213,10 @@
         // Get prime
         TPDirect.card.getPrime(function (result) {
             if (result.status !== 0) {
-                alert('get prime error ' + result.msg)
+                alert('get prime error ')
                 return
             }
-            alert('get prime 成功，prime: ' + result.card.prime)
+            alert('get prime 成功')
 
             let Booking_data = {
                 "data": {
