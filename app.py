@@ -5,6 +5,7 @@ import mysql.connector
 import os
 import json
 import requests
+from dotenv import load_dotenv
 app = Flask(__name__,
             static_url_path="/",
             static_folder="data")
@@ -12,7 +13,14 @@ app.config["JSON_AS_ASCII"] = False
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.config['SECRET_KEY'] = os.urandom(24)
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=31)
-# Pages
+mydb = mysql.connector.Connect(
+    host=os.getenv('APP_DB_HOST'),
+    user=os.getenv('APP_DB_USER'),
+    password=os.getenv('APP_DB_PASSWORD'),
+    database=os.getenv('APP_DB_DATABASE'),
+    charset=os.getenv('APP_DB_CHARSET')
+)
+load_dotenv()
 
 
 @app.route("/")
@@ -22,15 +30,6 @@ def index():
 
 @app.route("/api/attraction/<id>")
 def APIattraction(id):
-    mydb = mysql.connector.Connect(
-        host="localhost",
-        user="my_user",
-        password="nhAG*nn8Yu7V",
-        database="my_db"
-    )
-    # PW
-    # PW:nhAG*nn8Yu7V
-    # 數據庫查詢
     mycursor = mydb.cursor()
     sql_page = "SELECT web_id,name,category,description,address,transport,mrt,latitude,longitude,imges FROM taipei_travel WHERE web_id = {id}".format(
         id=id)
@@ -61,12 +60,6 @@ def APIattraction(id):
 
 @app.route("/api/attractions")
 def APIattractions():
-    mydb = mysql.connector.Connect(
-        host="localhost",
-        user="my_user",
-        password="nhAG*nn8Yu7V",
-        database="my_db"
-    )
     # 參數整理
     web_page = request.args.get("page", 0)
     keywords = request.args.get("keyword", "")
@@ -133,15 +126,9 @@ def APIattractions():
     return jsonify(data_printout[0])
 
 
-@app.route("/api/user", methods=["POST", "GET"])  # waiting
+@app.route("/api/user", methods=["POST", "GET"])
 def API():
-    mydb = mysql.connector.Connect(
-        host="localhost",
-        user="my_user",
-        password="nhAG*nn8Yu7V",
-        database="my_db",
-        charset="utf8"
-    )
+
     check_username = session.get('username')  # 確認是否登入中
     content = request.json  # 確認是否有需求
     signstatus_message = request.args.get("signstatus", "")
@@ -218,13 +205,6 @@ def API():
 
 @app.route("/api/booking", methods=["POST", "GET"])
 def A_booking():
-    mydb = mysql.connector.Connect(
-        host="localhost",
-        user="my_user",
-        password="nhAG*nn8Yu7V",
-        database="my_db",
-        charset="utf8"
-    )
     mycursor = mydb.cursor()
     booking_message = request.args.get("bookingstatus", "")
     content = request.json
@@ -282,13 +262,6 @@ def A_booking():
 
 @app.route("/api/booking/<booking_id>", methods=["DELETE"])
 def booking_delete(booking_id):
-    mydb = mysql.connector.Connect(
-        host="localhost",
-        user="my_user",
-        password="nhAG*nn8Yu7V",
-        database="my_db",
-        charset="utf8"
-    )
     mycursor = mydb.cursor()
     booking_search = "DELETE from user_booking WHERE id = '{id_db}'".format(
         id_db=booking_id)
@@ -305,13 +278,6 @@ def attraction(id):
 
 @app.route("/A_signin", methods=["POST", "GET"])
 def A_signin():
-    mydb = mysql.connector.Connect(
-        host="localhost",
-        user="my_user",
-        password="nhAG*nn8Yu7V",
-        database="my_db",
-        charset="utf8"
-    )
     Account = request.form["signinEmail"]
     Password = request.form["signinPassword"]
     session['username'] = Account
@@ -358,14 +324,6 @@ def A_order():
         orderData = request.json
         if orderData == []:
             return jsonify({"Message": "getRequest", "data": "null"})
-        print(orderData)
-        mydb = mysql.connector.Connect(
-            host="localhost",
-            user="my_user",
-            password="nhAG*nn8Yu7V",
-            database="my_db",
-            charset="utf8"
-        )
         mycursor = mydb.cursor()
         contact_update = "UPDATE user_booking SET contact_name='{contact_name}',contact_phone='{contact_phone}',contact_email='{contact_email}' WHERE id='{order_id}';".format(
             order_id=orderData["data"]["order"]["trip"]["attraaction"]["id"], contact_name=orderData["data"]["contact"]["name"], contact_phone=orderData["data"]["contact"]["email"], contact_email=orderData["data"]["contact"]["phone"])
@@ -373,16 +331,16 @@ def A_order():
         mydb.commit()
         print("------------------------split------------------------")
         print(orderData["data"])
-        orderReqUrl = "https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime"
+        orderReqUrl = os.getenv("APP_ORDER_PAY_REQURL")
         orderReqHeader = {
-            "content-type": "application/json",
-            "x-api-key": "partner_3f8vicM4EVQRVKBhgcD7ZHLVBLE8YMQSz8p3Mvto5WwaS9rB1LZKT1sb"
+            "content-type": os.getenv("APP_ORDER_PAY_CONTENTTYPE"),
+            "x-api-key": os.getenv("APP_ORDER_PAY_APIKEY")
         }
         orderReqData = {
             "prime": orderData["data"]["prime"],
-            "partner_key": "partner_3f8vicM4EVQRVKBhgcD7ZHLVBLE8YMQSz8p3Mvto5WwaS9rB1LZKT1sb",
+            "partner_key": os.getenv("APP_ORDER_PAY_APIKEY"),
             "merchant_id": "PursuingStudio_CTBC",
-            "details": "TapPay Test",
+            "details": "Test",
             "amount": 100,
             "cardholder": {
                 "phone_number": "+886923456789",
@@ -404,19 +362,12 @@ def A_order():
         OrderedDict = response.json()
         if OrderedDict["status"] == 0:
             if OrderedDict["msg"] == 'Success':
-                mydb = mysql.connector.Connect(
-                    host="localhost",
-                    user="my_user",
-                    password="nhAG*nn8Yu7V",
-                    database="my_db",
-                    charset="utf8"
-                )
                 mycursor = mydb.cursor()
                 order_update = "UPDATE user_booking SET order_status='1' WHERE id='{order_id}';".format(
                     order_id=orderData["data"]["order"]["trip"]["attraaction"]["id"])
                 mycursor.execute(order_update)
                 mydb.commit()
-                print()
+                print("ostest")
                 number = orderData["data"]["order"]["trip"]["date"].replace(
                     "-", "")+str(orderData["data"]["order"]["trip"]["attraaction"]["id"])
                 return jsonify({
@@ -434,30 +385,10 @@ def A_order():
     return {
         "data": "null"
     }
-    # Message_name = orderData["contact"]["name"]
-    # Message_phone = orderData["contact"]["phone"]
-    # Message_email = orderData["contact"]["email"]
-
-    print("------------------------split------------------------")
-    # print()
-    return jsonify(
-        {
-            "data": {
-
-            }
-        }
-    )
 
 
 @app.route("/api/order/<order_id>")
 def order_info(order_id):
-    mydb = mysql.connector.Connect(
-        host="localhost",
-        user="my_user",
-        password="nhAG*nn8Yu7V",
-        database="my_db",
-        charset="utf8"
-    )
     mycursor = mydb.cursor()
     booking_search = "SELECT * from user_booking WHERE id = '{id_db}'".format(
         id_db=order_id)
@@ -521,5 +452,5 @@ def err_handler(e):
     })
 
 
-# app.run(port=3000, debug=True)
-app.run(host="0.0.0.0", port=3000, debug=True)
+app.run(port=3000, debug=True)
+# app.run(host="0.0.0.0", port=3000, debug=True)
