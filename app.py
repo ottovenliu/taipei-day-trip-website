@@ -35,6 +35,7 @@ def APIattraction(id):
         id=id)
     mycursor.execute(sql_page)
     myresult_page = mycursor.fetchall()
+    mydb.commit()
 
     if myresult_page == []:
         abort(400)
@@ -71,6 +72,7 @@ def APIattractions():
         keyword=keywords)
     mycursor.execute(sql_keyword)
     myresult = mycursor.fetchall()
+    mydb.commit()
     data_printout = []
     rawdata = []
     dataspace = []
@@ -83,7 +85,6 @@ def APIattractions():
             "data": data
         }
         data_printout.append(data_dic)
-        print(myresult, "myresult")
     else:
         for item in myresult:
             dic = {
@@ -120,7 +121,6 @@ def APIattractions():
             "nextPage": nextwebpage,
             "data": dataspace[0][1]
         }
-        # print(data_dic, "data_dic")
         data_printout.append(data_dic)
 
     return jsonify(data_printout[0])
@@ -146,6 +146,7 @@ def API():
                 username_db=check_username)
             mycursor.execute(sql_json)
             myresult = mycursor.fetchall()
+            mydb.commit()
             if myresult == []:
                 user_info = {
                     "data": "null"
@@ -172,7 +173,7 @@ def API():
         username_db=signup_email)
     mycursor.execute(sql_json)
     myresult = mycursor.fetchall()
-    # print(content["name"])
+    mydb.commit()
     if len(myresult) != 0:
 
         if(content.get("name") == None):  # 登入判斷
@@ -214,6 +215,7 @@ def A_booking():
             username=check_username)
         mycursor.execute(booking_user)
         myresult = mycursor.fetchall()
+        mydb.commit()
         if (myresult == []):
             return jsonify({"data": "null"})
         else:
@@ -221,7 +223,6 @@ def A_booking():
                 username=myresult[0][1])
             mycursor.execute(booking_user)
             myresult = mycursor.fetchall()
-            print(myresult)
             if(myresult == []):
                 return jsonify({"data": "null"})
             if(myresult[len(myresult)-1][12] == '0'):
@@ -239,7 +240,6 @@ def A_booking():
                         "time": item[7]
                     }
                     booking_Infodata.append(dic)
-                print("已成功回送")
                 return jsonify({"data": booking_Infodata})
             if(myresult[len(myresult)-1][12] == '1'):
                 return jsonify({"data": "null"})
@@ -250,8 +250,6 @@ def A_booking():
                    content["booking_date"], content["booking_time"], content["order_status"])
             mycursor.execute(booking_insert, val)
             mydb.commit()
-            print("成功輸入")
-            print("------------------------------SPOTLIGHT------------------------------")
             return jsonify({"ok": True, "message": "成功輸入"})
         else:
             return jsonify({"error": True, "message": "無資料進來"})
@@ -272,7 +270,6 @@ def booking_delete(booking_id):
 
 @app.route("/attraction/<id>")
 def attraction(id):
-    print(id)
     return render_template("attraction.html")
 
 
@@ -287,6 +284,7 @@ def A_signin():
         username=Account)
     mycursor.execute(sql)
     myresult = mycursor.fetchall()
+    mydb.commit()
     if (myresult == []):
         return "無此帳號"
     for i in myresult[0]:
@@ -329,8 +327,6 @@ def A_order():
             order_id=orderData["data"]["order"]["trip"]["attraaction"]["id"], contact_name=orderData["data"]["contact"]["name"], contact_phone=orderData["data"]["contact"]["email"], contact_email=orderData["data"]["contact"]["phone"])
         mycursor.execute(contact_update)
         mydb.commit()
-        print("------------------------split------------------------")
-        print(orderData["data"])
         orderReqUrl = os.getenv("APP_ORDER_PAY_REQURL")
         orderReqHeader = {
             "content-type": os.getenv("APP_ORDER_PAY_CONTENTTYPE"),
@@ -367,7 +363,6 @@ def A_order():
                     order_id=orderData["data"]["order"]["trip"]["attraaction"]["id"])
                 mycursor.execute(order_update)
                 mydb.commit()
-                print("ostest")
                 number = orderData["data"]["order"]["trip"]["date"].replace(
                     "-", "")+str(orderData["data"]["order"]["trip"]["attraaction"]["id"])
                 return jsonify({
@@ -379,8 +374,6 @@ def A_order():
                         }
                     }
                 })
-
-    print("------------------------split------------------------")
 
     return {
         "data": "null"
@@ -394,8 +387,8 @@ def order_info(order_id):
         id_db=order_id)
     mycursor.execute(booking_search)
     orderInfo = mycursor.fetchall()
+    mydb.commit()
     if(orderInfo != []):
-        print(orderInfo)
         datenumber = str(orderInfo[0][6].replace("-", ""))
         number = datenumber+str(orderInfo[0][0])
         price = True
@@ -452,5 +445,5 @@ def err_handler(e):
     })
 
 
-# app.run(port=3000, debug=True)
-app.run(host="0.0.0.0", port=80)
+app.run(port=80, debug=True)
+# app.run(host="0.0.0.0", port=80)

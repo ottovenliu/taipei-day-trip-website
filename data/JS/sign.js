@@ -89,3 +89,4 @@ function signout() {
     box.onclick = function () { location.href = "/A_signout" }
 }
 signstatus();
+window.setInterval(signstatus, 1000 * 60 * 5);
